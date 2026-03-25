@@ -1,0 +1,247 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// USERS & ORGANIZATIONS
+// ============================================================
+
+model User {
+  id               String    @id @default(cuid())
+  clerkId          String    @unique
+  email            String    @unique
+  name             String?
+  avatarUrl        String?
+  locale           String    @default("fr")
+  plan             Plan      @default(FREE)
+  stripeCustomerId String?   @unique
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  restaurants  Restaurant[]
+  memberships  TeamMember[]
+  usageRecords UsageRecord[]
+  notification NotificationPreference?
+}
+
+enum Plan {
+  FREE
+  PRO
+  BUSINESS
+}
+
+model Restaurant {
+  id                String    @id @default(cuid())
+  name              String
+  address           String?
+  googlePlaceId     String?   @unique
+  googleRating      Float?
+  googleReviewCount Int?
+  imageUrl          String?
+  lastSyncAt        DateTime?
+  syncEnabled       Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  reviews           Review[]
+  trendsReports     TrendsReport[]
+  teamMembers       TeamMember[]
+  competitors       Competitor[]
+  responseTemplates ResponseTemplate[]
+
+  @@index([ownerId])
+  @@index([googlePlaceId])
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  role      TeamRole @default(MEMBER)
+  createdAt DateTime @default(now())
+
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, restaurantId])
+}
+
+enum TeamRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+// ============================================================
+// REVIEWS & RESPONSES
+// ============================================================
+
+model Review {
+  id             String       @id @default(cuid())
+  author         String
+  source         ReviewSource @default(GOOGLE)
+  rating         Int
+  content        String
+  sentiment      Sentiment?
+  sentimentScore Float?
+  googleReviewId String?      @unique
+  reviewDate     DateTime?
+  isNew          Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  responses GeneratedResponse[]
+
+  @@index([restaurantId, createdAt(sort: Desc)])
+  @@index([restaurantId, sentiment])
+  @@index([restaurantId, isNew])
+}
+
+enum ReviewSource {
+  GOOGLE
+  TRIPADVISOR
+  YELP
+  OTHER
+}
+
+enum Sentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+model GeneratedResponse {
+  id        String   @id @default(cuid())
+  content   String
+  tone      String?
+  wasUsed   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  reviewId String
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@index([reviewId])
+}
+
+// ============================================================
+// TRENDS & REPORTS
+// ============================================================
+
+model TrendsReport {
+  id              String    @id @default(cuid())
+  summary         String
+  totalReviews    Int
+  negativeCount   Int
+  issuesJson      Json
+  suggestionsJson Json
+  periodStart     DateTime?
+  periodEnd       DateTime?
+  createdAt       DateTime  @default(now())
+
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, createdAt(sort: Desc)])
+}
+
+// ============================================================
+// USAGE TRACKING & BILLING
+// ============================================================
+
+model UsageRecord {
+  id         String      @id @default(cuid())
+  action     UsageAction
+  tokensUsed Int?
+  createdAt  DateTime    @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([userId, action, createdAt])
+}
+
+enum UsageAction {
+  ANALYZE_REVIEW
+  REGENERATE_RESPONSE
+  TRENDS_ANALYSIS
+  COMPETITOR_ANALYSIS
+  WEEKLY_REPORT
+}
+
+model Subscription {
+  id                   String   @id @default(cuid())
+  stripeSubscriptionId String   @unique
+  stripeCustomerId     String
+  stripePriceId        String
+  status               String
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  cancelAtPeriodEnd    Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([stripeCustomerId])
+}
+
+// ============================================================
+// PREMIUM FEATURES
+// ============================================================
+
+model Competitor {
+  id                String    @id @default(cuid())
+  name              String
+  googlePlaceId     String
+  googleRating      Float?
+  googleReviewCount Int?
+  lastAnalyzedAt    DateTime?
+  analysisJson      Json?
+  createdAt         DateTime  @default(now())
+
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
+}
+
+model ResponseTemplate {
+  id        String    @id @default(cuid())
+  name      String
+  content   String
+  tone      String
+  sentiment Sentiment
+  locale    String    @default("fr")
+  isDefault Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  restaurantId String?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, sentiment])
+}
+
+model NotificationPreference {
+  id                 String  @id @default(cuid())
+  emailNewReview     Boolean @default(true)
+  emailNegativeOnly  Boolean @default(false)
+  emailWeeklyDigest  Boolean @default(true)
+  emailMonthlyReport Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

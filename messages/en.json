@@ -1,0 +1,293 @@
+{
+  "header": {
+    "title": "ReviewReply",
+    "dashboard": "Dashboard",
+    "tryFree": "Try Free",
+    "signIn": "Sign In"
+  },
+  "hero": {
+    "title": "Turn Negative Reviews Into Loyal Customers",
+    "subtitle": "The AI assistant that helps restaurant owners respond to customer reviews professionally, empathetically, and in one click.",
+    "cta": "Get Started Free",
+    "ctaSecondary": "See How It Works"
+  },
+  "features": {
+    "title": "Everything You Need",
+    "subtitle": "Simple and powerful tools to manage your online reputation.",
+    "sentiment": {
+      "title": "Sentiment Detection",
+      "description": "AI automatically analyzes each review to identify the tone — positive, neutral, or negative — and prioritizes urgent responses."
+    },
+    "response": {
+      "title": "AI-Generated Responses",
+      "description": "Get professional, empathetic responses in seconds, tailored to the specific context of each review."
+    },
+    "copy": {
+      "title": "One-Click Copy & Send",
+      "description": "Copy the generated response and paste it directly on Google, TripAdvisor, or any other review platform."
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Three simple steps to respond like a pro.",
+    "step1": {
+      "number": "01",
+      "title": "Paste the Review",
+      "description": "Copy the customer review from Google, TripAdvisor, or another platform and paste it into our tool."
+    },
+    "step2": {
+      "number": "02",
+      "title": "AI Analyzes & Writes",
+      "description": "Our AI detects sentiment and generates a professional response tailored to the context."
+    },
+    "step3": {
+      "number": "03",
+      "title": "Copy & Publish",
+      "description": "Copy the response in one click and publish it on the review platform of your choice."
+    }
+  },
+  "pricing": {
+    "title": "Simple Pricing",
+    "subtitle": "Start free, upgrade to Pro or Business when you're ready.",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "period": "/month",
+      "features": ["10 AI responses per month", "Sentiment detection", "One-click copy"],
+      "cta": "Get Started"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$19",
+      "period": "/month",
+      "features": ["Unlimited responses", "Unlimited history", "Tone customization", "Response templates", "Negative review alerts", "Weekly digest", "Priority support"],
+      "cta": "Upgrade to Pro",
+      "badge": "Popular"
+    },
+    "business": {
+      "name": "Business",
+      "price": "$49",
+      "period": "/month",
+      "features": ["Everything in Pro", "10 restaurants", "5 competitor analysis", "Monthly PDF report", "5 team members", "Hourly Google sync"],
+      "cta": "Upgrade to Business"
+    }
+  },
+  "footer": {
+    "description": "The AI assistant for restaurant owners. Respond to customer reviews in seconds.",
+    "product": "Product",
+    "legal": "Legal",
+    "links": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "copyright": "© 2026 ReviewReply. All rights reserved."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "addReview": "Add a Review",
+    "emptyTitle": "No reviews yet",
+    "emptyDescription": "Paste your first customer review to generate a professional response.",
+    "stats": {
+      "totalReviews": "Total Reviews",
+      "avgRating": "Avg Rating",
+      "responseRate": "Response Rate",
+      "sentiment": "Positive",
+      "negative": "negative",
+      "recentReviews": "New (7d)"
+    },
+    "form": {
+      "author": "Author Name",
+      "authorPlaceholder": "e.g. John D.",
+      "source": "Source",
+      "rating": "Rating",
+      "content": "Review Content",
+      "contentPlaceholder": "Paste the customer review here...",
+      "submit": "Analyze & Generate Response",
+      "submitting": "Analyzing...",
+      "tone": "Response tone",
+      "toneDefault": "Auto",
+      "tones": {
+        "professional": "Professional",
+        "warm": "Warm",
+        "casual": "Casual",
+        "formal": "Formal"
+      }
+    },
+    "review": {
+      "response": "Generated Response",
+      "copy": "Copy Response",
+      "copied": "Copied!",
+      "regenerate": "Regenerate",
+      "regenerating": "Regenerating...",
+      "delete": "Delete",
+      "positive": "Positive",
+      "neutral": "Neutral",
+      "negative": "Negative"
+    },
+    "sources": {
+      "google": "Google",
+      "tripadvisor": "TripAdvisor",
+      "yelp": "Yelp",
+      "other": "Other"
+    }
+  },
+  "restaurants": {
+    "nav": "Restaurants",
+    "title": "My Restaurants",
+    "subtitle": "Manage your restaurants and sync Google reviews.",
+    "addNew": "Add Restaurant",
+    "addNewSubtitle": "Search on Google Maps or add manually.",
+    "modeGoogle": "Google Search",
+    "modeManual": "Manual Add",
+    "searchLabel": "Search for your restaurant",
+    "searchPlaceholder": "Restaurant name, address...",
+    "manualNameLabel": "Restaurant name",
+    "manualNamePlaceholder": "e.g. Luigi's Place",
+    "createButton": "Add Restaurant",
+    "creating": "Creating...",
+    "createError": "Failed to create restaurant",
+    "alreadyLinked": "This restaurant is already linked to your account.",
+    "selectRestaurant": "Select restaurant",
+    "manageAll": "Manage all restaurants",
+    "reviewCount": "reviews",
+    "lastSync": "Last sync",
+    "sync": "Sync",
+    "syncing": "Syncing...",
+    "syncSuccess": "{inserted} new reviews imported, {skipped} already existed.",
+    "syncError": "Sync failed",
+    "syncEnabled": "Auto-sync enabled",
+    "syncDisabled": "Auto-sync disabled",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this restaurant and all its reviews?",
+    "deleteError": "Failed to delete restaurant",
+    "empty": "No restaurants. Add your first restaurant to get started."
+  },
+  "billing": {
+    "title": "Subscription",
+    "subtitle": "Manage your plan and billing.",
+    "currentPlan": "Current plan",
+    "currentPlanLabel": "Current plan",
+    "analyzesUsed": "Analyzes used this month",
+    "manageSubscription": "Manage subscription",
+    "upgrade": "Upgrade to this plan",
+    "redirecting": "Redirecting...",
+    "popular": "Popular",
+    "perMonth": "/month",
+    "error": "An error occurred",
+    "features": {
+      "analyzes10": "10 analyzes per month",
+      "oneRestaurant": "1 restaurant",
+      "history30": "30-day history",
+      "oneTrend": "1 trends analysis per month",
+      "unlimitedAnalyzes": "Unlimited analyzes",
+      "unlimitedHistory": "Unlimited history",
+      "unlimitedTrends": "Unlimited trends",
+      "toneCustomization": "Tone customization",
+      "templates": "Response templates",
+      "alerts": "Negative review alerts",
+      "weeklyDigest": "Weekly digest",
+      "tenRestaurants": "10 restaurants",
+      "competitors": "5 competitor analysis",
+      "monthlyReport": "Monthly PDF report",
+      "team": "5 team members"
+    }
+  },
+  "analytics": {
+    "nav": "Analytics",
+    "title": "Analytics",
+    "subtitle": "Visualize your review trends over the last 12 weeks.",
+    "noData": "Not enough data yet. Add reviews to see your analytics.",
+    "totalReviews": "Total Reviews",
+    "responseRate": "Response Rate",
+    "period": "Period",
+    "last12Weeks": "12 weeks",
+    "sentimentOverTime": "Sentiment Over Time",
+    "ratingDistribution": "Rating Distribution",
+    "volumeOverTime": "Review Volume by Week",
+    "positive": "Positive",
+    "neutral": "Neutral",
+    "negative": "Negative",
+    "reviewVolume": "Reviews"
+  },
+  "settings": {
+    "nav": "Settings",
+    "billing": "Subscription"
+  },
+  "meta": {
+    "title": "ReviewReply — AI-Powered Restaurant Review Responses",
+    "description": "The AI assistant that helps restaurant owners respond to customer reviews professionally and empathetically.",
+    "ogTitle": "ReviewReply — Turn Reviews Into Loyal Customers",
+    "ogDescription": "Analyze sentiment, generate professional responses, and manage your online reputation with AI."
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "retry": "Try again",
+    "notFound": "Page not found",
+    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "backToDashboard": "Back to dashboard",
+    "backToHome": "Back to home",
+    "validationError": "Invalid data",
+    "invalidRating": "Rating must be between 1 and 5",
+    "contentTooLong": "Content is too long (max 2000 characters)",
+    "missingFields": "Please fill in all required fields"
+  },
+  "trends": {
+    "title": "Trends Analysis",
+    "subtitle": "Search your restaurant on Google or import reviews manually to identify recurring issues.",
+    "nav": "Trends",
+    "error": "Analysis failed",
+    "tabs": {
+      "google": "Google Search",
+      "manual": "Manual Import"
+    },
+    "search": {
+      "label": "Search for your restaurant",
+      "placeholder": "Restaurant name, address...",
+      "analyze": "Analyze reviews",
+      "fetching": "Fetching...",
+      "notEnoughReviews": "Not enough reviews found for analysis (minimum 3).",
+      "reviewsLabel": "reviews"
+    },
+    "progress": {
+      "fetching": "Fetching Google reviews...",
+      "fetchingHint": "We're going through all review pages for this restaurant.",
+      "analyzing": "Analyzing...",
+      "analyzingHint": "AI is identifying trends and preparing suggestions.",
+      "analyzingCount": "Analyzing {count} reviews..."
+    },
+    "form": {
+      "modeBulk": "Paste in bulk",
+      "modeIndividual": "One by one",
+      "bulkLabel": "Paste your customer reviews",
+      "bulkPlaceholder": "Paste all your customer reviews here, separated by a blank line...\n\nExample:\n\nThe service was very slow, we waited 45 minutes for our dishes.\n\nExcellent restaurant, the food was delicious and the staff very welcoming.\n\nNoisy atmosphere and lukewarm dishes, disappointing for the price.",
+      "bulkHint": "Separate each review with a blank line. Minimum 3 reviews required.",
+      "individualLabel": "Add your reviews one by one",
+      "individualPlaceholder": "Paste a customer review here...",
+      "addAnother": "Add a review",
+      "reviewCount": "{count, plural, =0 {No reviews detected} =1 {1 review detected} other {# reviews detected}}",
+      "minimum": "minimum 3 required",
+      "submit": "Analyze trends",
+      "analyzing": "Analyzing..."
+    },
+    "results": {
+      "summary": "Analysis Summary",
+      "reviewsAnalyzed": "{count, plural, =1 {1 review analyzed} other {# reviews analyzed}}",
+      "issuesTitle": "Recurring Issues",
+      "mentions": "{count, plural, =1 {1 mention} other {# mentions}}",
+      "suggestionsTitle": "Improvement Suggestions"
+    },
+    "severity": {
+      "high": "Critical",
+      "medium": "Moderate",
+      "low": "Minor"
+    },
+    "priority": {
+      "high": "High priority",
+      "medium": "Medium priority",
+      "low": "Low priority"
+    }
+  }
+}

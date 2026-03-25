@@ -1,0 +1,293 @@
+{
+  "header": {
+    "title": "ReviewReply",
+    "dashboard": "Tableau de bord",
+    "tryFree": "Essayer gratuitement",
+    "signIn": "Se connecter"
+  },
+  "hero": {
+    "title": "Transformez les avis négatifs en clients fidèles",
+    "subtitle": "L'assistant IA qui aide les restaurateurs à répondre aux avis clients de manière professionnelle, empathique et en un clic.",
+    "cta": "Commencer gratuitement",
+    "ctaSecondary": "Voir comment ça marche"
+  },
+  "features": {
+    "title": "Tout ce dont vous avez besoin",
+    "subtitle": "Des outils simples et puissants pour gérer votre réputation en ligne.",
+    "sentiment": {
+      "title": "Détection de sentiment",
+      "description": "L'IA analyse automatiquement chaque avis pour identifier le ton — positif, neutre ou négatif — et priorise les réponses urgentes."
+    },
+    "response": {
+      "title": "Réponses générées par IA",
+      "description": "Obtenez des réponses professionnelles et empathiques en quelques secondes, adaptées au contexte spécifique de chaque avis."
+    },
+    "copy": {
+      "title": "Copier et envoyer en un clic",
+      "description": "Copiez la réponse générée et collez-la directement sur Google, TripAdvisor ou toute autre plateforme d'avis."
+    }
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "subtitle": "Trois étapes simples pour répondre comme un pro.",
+    "step1": {
+      "number": "01",
+      "title": "Collez l'avis",
+      "description": "Copiez l'avis client depuis Google, TripAdvisor ou une autre plateforme et collez-le dans notre outil."
+    },
+    "step2": {
+      "number": "02",
+      "title": "L'IA analyse et rédige",
+      "description": "Notre IA détecte le sentiment et génère une réponse professionnelle adaptée au contexte."
+    },
+    "step3": {
+      "number": "03",
+      "title": "Copiez et publiez",
+      "description": "Copiez la réponse en un clic et publiez-la sur la plateforme d'avis de votre choix."
+    }
+  },
+  "pricing": {
+    "title": "Tarifs simples",
+    "subtitle": "Commencez gratuitement, passez à Pro ou Business quand vous êtes prêt.",
+    "free": {
+      "name": "Gratuit",
+      "price": "0€",
+      "period": "/mois",
+      "features": ["10 réponses IA par mois", "Détection de sentiment", "Copie en un clic"],
+      "cta": "Commencer"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "19€",
+      "period": "/mois",
+      "features": ["Réponses illimitées", "Historique illimité", "Personnalisation du ton", "Templates de réponse", "Alertes avis négatifs", "Résumé hebdomadaire", "Support prioritaire"],
+      "cta": "Passer à Pro",
+      "badge": "Populaire"
+    },
+    "business": {
+      "name": "Business",
+      "price": "49€",
+      "period": "/mois",
+      "features": ["Tout le plan Pro", "10 restaurants", "Analyse de 5 concurrents", "Rapport PDF mensuel", "5 membres d'équipe", "Sync Google toutes les heures"],
+      "cta": "Passer à Business"
+    }
+  },
+  "footer": {
+    "description": "L'assistant IA pour restaurateurs. Répondez aux avis clients en quelques secondes.",
+    "product": "Produit",
+    "legal": "Légal",
+    "links": {
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "privacy": "Confidentialité",
+      "terms": "Conditions"
+    },
+    "copyright": "© 2026 ReviewReply. Tous droits réservés."
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "addReview": "Ajouter un avis",
+    "emptyTitle": "Aucun avis pour le moment",
+    "emptyDescription": "Collez votre premier avis client pour générer une réponse professionnelle.",
+    "stats": {
+      "totalReviews": "Total avis",
+      "avgRating": "Note moyenne",
+      "responseRate": "Taux de réponse",
+      "sentiment": "Positifs",
+      "negative": "négatifs",
+      "recentReviews": "Nouveaux (7j)"
+    },
+    "form": {
+      "author": "Nom de l'auteur",
+      "authorPlaceholder": "Ex: Jean D.",
+      "source": "Source",
+      "rating": "Note",
+      "content": "Contenu de l'avis",
+      "contentPlaceholder": "Collez l'avis client ici...",
+      "submit": "Analyser et générer une réponse",
+      "submitting": "Analyse en cours...",
+      "tone": "Ton de la réponse",
+      "toneDefault": "Auto",
+      "tones": {
+        "professional": "Professionnel",
+        "warm": "Chaleureux",
+        "casual": "Décontracté",
+        "formal": "Formel"
+      }
+    },
+    "review": {
+      "response": "Réponse générée",
+      "copy": "Copier la réponse",
+      "copied": "Copié !",
+      "regenerate": "Régénérer",
+      "regenerating": "Régénération...",
+      "delete": "Supprimer",
+      "positive": "Positif",
+      "neutral": "Neutre",
+      "negative": "Négatif"
+    },
+    "sources": {
+      "google": "Google",
+      "tripadvisor": "TripAdvisor",
+      "yelp": "Yelp",
+      "other": "Autre"
+    }
+  },
+  "restaurants": {
+    "nav": "Restaurants",
+    "title": "Mes restaurants",
+    "subtitle": "Gérez vos restaurants et synchronisez les avis Google.",
+    "addNew": "Ajouter un restaurant",
+    "addNewSubtitle": "Recherchez sur Google Maps ou ajoutez manuellement.",
+    "modeGoogle": "Recherche Google",
+    "modeManual": "Ajout manuel",
+    "searchLabel": "Recherchez votre restaurant",
+    "searchPlaceholder": "Nom du restaurant, adresse...",
+    "manualNameLabel": "Nom du restaurant",
+    "manualNamePlaceholder": "Ex: Chez Luigi",
+    "createButton": "Ajouter le restaurant",
+    "creating": "Création...",
+    "createError": "Erreur lors de la création",
+    "alreadyLinked": "Ce restaurant est déjà lié à votre compte.",
+    "selectRestaurant": "Choisir un restaurant",
+    "manageAll": "Gérer tous les restaurants",
+    "reviewCount": "avis",
+    "lastSync": "Dernière sync",
+    "sync": "Synchroniser",
+    "syncing": "Synchronisation...",
+    "syncSuccess": "{inserted} nouveaux avis importés, {skipped} déjà existants.",
+    "syncError": "Erreur lors de la synchronisation",
+    "syncEnabled": "Synchronisation automatique activée",
+    "syncDisabled": "Synchronisation automatique désactivée",
+    "delete": "Supprimer",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce restaurant et tous ses avis ?",
+    "deleteError": "Erreur lors de la suppression",
+    "empty": "Aucun restaurant. Ajoutez votre premier restaurant pour commencer."
+  },
+  "billing": {
+    "title": "Abonnement",
+    "subtitle": "Gérez votre plan et votre facturation.",
+    "currentPlan": "Plan actuel",
+    "currentPlanLabel": "Plan actuel",
+    "analyzesUsed": "Analyses utilisées ce mois",
+    "manageSubscription": "Gérer l'abonnement",
+    "upgrade": "Passer à ce plan",
+    "redirecting": "Redirection...",
+    "popular": "Populaire",
+    "perMonth": "/mois",
+    "error": "Une erreur est survenue",
+    "features": {
+      "analyzes10": "10 analyses par mois",
+      "oneRestaurant": "1 restaurant",
+      "history30": "30 jours d'historique",
+      "oneTrend": "1 analyse de tendances par mois",
+      "unlimitedAnalyzes": "Analyses illimitées",
+      "unlimitedHistory": "Historique illimité",
+      "unlimitedTrends": "Tendances illimitées",
+      "toneCustomization": "Personnalisation du ton",
+      "templates": "Templates de réponse",
+      "alerts": "Alertes avis négatifs",
+      "weeklyDigest": "Résumé hebdomadaire",
+      "tenRestaurants": "10 restaurants",
+      "competitors": "Analyse de 5 concurrents",
+      "monthlyReport": "Rapport PDF mensuel",
+      "team": "5 membres d'équipe"
+    }
+  },
+  "analytics": {
+    "nav": "Analytics",
+    "title": "Analytics",
+    "subtitle": "Visualisez les tendances de vos avis sur les 12 dernières semaines.",
+    "noData": "Pas encore assez de données. Ajoutez des avis pour voir vos analytics.",
+    "totalReviews": "Total avis",
+    "responseRate": "Taux de réponse",
+    "period": "Période",
+    "last12Weeks": "12 semaines",
+    "sentimentOverTime": "Sentiment dans le temps",
+    "ratingDistribution": "Distribution des notes",
+    "volumeOverTime": "Volume d'avis par semaine",
+    "positive": "Positif",
+    "neutral": "Neutre",
+    "negative": "Négatif",
+    "reviewVolume": "Avis"
+  },
+  "settings": {
+    "nav": "Paramètres",
+    "billing": "Abonnement"
+  },
+  "meta": {
+    "title": "ReviewReply — Réponses IA aux avis restaurants",
+    "description": "L'assistant IA qui aide les restaurateurs à répondre aux avis clients de manière professionnelle et empathique.",
+    "ogTitle": "ReviewReply — Transformez les avis en clients fidèles",
+    "ogDescription": "Analysez le sentiment, générez des réponses professionnelles et gérez votre réputation en ligne avec l'IA."
+  },
+  "errors": {
+    "title": "Une erreur est survenue",
+    "description": "Quelque chose s'est mal passé. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "notFound": "Page introuvable",
+    "notFoundDescription": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "backToDashboard": "Retour au tableau de bord",
+    "backToHome": "Retour à l'accueil",
+    "validationError": "Données invalides",
+    "invalidRating": "La note doit être entre 1 et 5",
+    "contentTooLong": "Le contenu est trop long (max 2000 caractères)",
+    "missingFields": "Veuillez remplir tous les champs obligatoires"
+  },
+  "trends": {
+    "title": "Analyse des tendances",
+    "subtitle": "Recherchez votre restaurant sur Google ou importez vos avis manuellement pour identifier les problèmes récurrents.",
+    "nav": "Tendances",
+    "error": "Erreur lors de l'analyse",
+    "tabs": {
+      "google": "Recherche Google",
+      "manual": "Import manuel"
+    },
+    "search": {
+      "label": "Recherchez votre restaurant",
+      "placeholder": "Nom du restaurant, adresse...",
+      "analyze": "Analyser les avis",
+      "fetching": "Récupération...",
+      "notEnoughReviews": "Pas assez d'avis trouvés pour une analyse (minimum 3).",
+      "reviewsLabel": "avis"
+    },
+    "progress": {
+      "fetching": "Récupération des avis Google...",
+      "fetchingHint": "Nous parcourons toutes les pages d'avis de ce restaurant.",
+      "analyzing": "Analyse en cours...",
+      "analyzingHint": "L'IA identifie les tendances et prépare des suggestions.",
+      "analyzingCount": "Analyse de {count} avis en cours..."
+    },
+    "form": {
+      "modeBulk": "Coller en masse",
+      "modeIndividual": "Un par un",
+      "bulkLabel": "Collez vos avis clients",
+      "bulkPlaceholder": "Collez ici tous vos avis clients, séparés par une ligne vide...\n\nExemple :\n\nLe service était très lent, nous avons attendu 45 minutes pour nos plats.\n\nExcellent restaurant, les plats étaient délicieux et le personnel très accueillant.\n\nAmbiance bruyante et plats tièdes, décevant pour le prix.",
+      "bulkHint": "Séparez chaque avis par une ligne vide. Minimum 3 avis requis.",
+      "individualLabel": "Ajoutez vos avis un par un",
+      "individualPlaceholder": "Collez un avis client ici...",
+      "addAnother": "Ajouter un avis",
+      "reviewCount": "{count, plural, =0 {Aucun avis détecté} =1 {1 avis détecté} other {# avis détectés}}",
+      "minimum": "minimum 3 requis",
+      "submit": "Analyser les tendances",
+      "analyzing": "Analyse en cours..."
+    },
+    "results": {
+      "summary": "Résumé de l'analyse",
+      "reviewsAnalyzed": "{count, plural, =1 {1 avis analysé} other {# avis analysés}}",
+      "issuesTitle": "Problèmes récurrents",
+      "mentions": "{count, plural, =1 {1 mention} other {# mentions}}",
+      "suggestionsTitle": "Suggestions d'amélioration"
+    },
+    "severity": {
+      "high": "Critique",
+      "medium": "Modéré",
+      "low": "Mineur"
+    },
+    "priority": {
+      "high": "Priorité haute",
+      "medium": "Priorité moyenne",
+      "low": "Priorité basse"
+    }
+  }
+}
