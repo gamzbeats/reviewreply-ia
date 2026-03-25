@@ -32,6 +32,7 @@ interface ReviewListProps {
   onUpdate: (review: Review) => void;
   onDelete: (id: string) => void;
   templates?: Template[];
+  restaurantId?: string | null;
 }
 
 const ITEMS_PER_PAGE = 20;
@@ -46,6 +47,7 @@ export default function ReviewList({
   onUpdate,
   onDelete,
   templates,
+  restaurantId,
 }: ReviewListProps) {
   const t = useTranslations("dashboard");
   const [searchInput, setSearchInput] = useState(filters.search);
@@ -85,6 +87,32 @@ export default function ReviewList({
     { value: "rating_desc", label: t("filters.sortHighest") },
     { value: "rating_asc", label: t("filters.sortLowest") },
   ];
+
+  const [exporting, setExporting] = useState(false);
+
+  const handleExport = async () => {
+    if (!restaurantId) return;
+    setExporting(true);
+    try {
+      const res = await fetch(`/api/restaurants/${restaurantId}/export`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download =
+          res.headers
+            .get("Content-Disposition")
+            ?.match(/filename="(.+)"/)?.[1] || "reviews.csv";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch {
+      // silently fail
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const from = (page - 1) * ITEMS_PER_PAGE + 1;
   const to = Math.min(page * ITEMS_PER_PAGE, total);
@@ -157,11 +185,36 @@ export default function ReviewList({
         </div>
       </div>
 
-      {/* Results info */}
+      {/* Results info + export */}
       {total > 0 && (
-        <p className="text-sm text-muted">
-          {t("pagination.showing", { from, to, total })}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted">
+            {t("pagination.showing", { from, to, total })}
+          </p>
+          {restaurantId && (
+            <button
+              onClick={handleExport}
+              disabled={exporting}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-card border border-border rounded-[var(--radius-button)] text-foreground hover:bg-card-hover transition-colors disabled:opacity-50"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              {exporting ? t("export.exporting") : t("export.csv")}
+            </button>
+          )}
+        </div>
       )}
 
       {/* Review cards */}

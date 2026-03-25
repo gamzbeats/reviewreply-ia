@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { UserButton } from "@clerk/nextjs";
 import LanguageToggle from "@/components/ui/LanguageToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
 
@@ -67,6 +68,7 @@ export default function DashboardHeader() {
             ))}
           </nav>
 
+          <ThemeToggle />
           <LanguageToggle />
           <UserButton />
 

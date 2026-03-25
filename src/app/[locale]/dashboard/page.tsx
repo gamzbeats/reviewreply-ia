@@ -240,6 +240,7 @@ export default function DashboardPage() {
           onUpdate={handleUpdate}
           onDelete={handleDelete}
           templates={templates}
+          restaurantId={restaurantId}
         />
       ) : (
         <EmptyState />

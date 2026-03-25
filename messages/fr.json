@@ -196,6 +196,10 @@
     "pagination": {
       "showing": "Avis {from}-{to} sur {total}"
     },
+    "export": {
+      "csv": "Exporter CSV",
+      "exporting": "Export..."
+    },
     "sources": {
       "google": "Google",
       "tripadvisor": "TripAdvisor",

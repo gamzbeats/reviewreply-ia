@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import LanguageToggle from "@/components/ui/LanguageToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
@@ -36,6 +37,7 @@ export default function Header() {
 
         {/* Desktop actions */}
         <div className="hidden sm:flex items-center gap-4">
+          <ThemeToggle />
           <LanguageToggle />
           {isSignedIn ? (
             <>
@@ -90,7 +92,10 @@ export default function Header() {
           className="sm:hidden bg-background/95 backdrop-blur-md border-b border-border/50 shadow-lg"
         >
           <div className="flex flex-col p-4 gap-3">
-            <LanguageToggle />
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <LanguageToggle />
+            </div>
             {isSignedIn ? (
               <>
                 <Link href="/dashboard" onClick={() => setMobileOpen(false)}>

@@ -196,6 +196,10 @@
     "pagination": {
       "showing": "Reviews {from}-{to} of {total}"
     },
+    "export": {
+      "csv": "Export CSV",
+      "exporting": "Exporting..."
+    },
     "sources": {
       "google": "Google",
       "tripadvisor": "TripAdvisor",
