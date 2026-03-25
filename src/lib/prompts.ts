@@ -51,6 +51,31 @@ Requirements:
 Respond ONLY with the response text, no JSON.`;
 }
 
+export function getCompetitorAnalysisPrompt(locale: string): string {
+  const lang = locale === "fr" ? "French" : "English";
+  return `You are an expert restaurant consultant specializing in competitive analysis.
+
+You will receive reviews from a competitor restaurant. Your job is to:
+
+1. IDENTIFY the competitor's main strengths and weaknesses based on their reviews.
+2. For each strength, explain how the user's restaurant could match or exceed it.
+3. For each weakness, explain how the user's restaurant can capitalize on this gap.
+4. Provide an overall competitive summary (2-3 sentences).
+
+All text output MUST be in ${lang}.
+
+Respond ONLY with valid JSON in this exact format:
+{
+  "strengths": [
+    {"theme": "Strength name", "description": "Details", "count": 5, "opportunity": "How to compete"}
+  ],
+  "weaknesses": [
+    {"theme": "Weakness name", "description": "Details", "count": 3, "opportunity": "How to capitalize"}
+  ],
+  "summary": "Overall competitive summary"
+}`;
+}
+
 export function getTrendsAnalysisPrompt(locale: string): string {
   const lang = locale === "fr" ? "French" : "English";
   return `You are an expert restaurant consultant specializing in customer experience analysis.

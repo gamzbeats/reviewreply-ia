@@ -23,11 +23,49 @@ export async function GET(
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
-    const reviews = await prisma.review.findMany({
-      where: { restaurantId },
-      include: { responses: { orderBy: { createdAt: "desc" }, take: 1 } },
-      orderBy: { createdAt: "desc" },
-    });
+    // Parse query params
+    const searchParams = request.nextUrl.searchParams;
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")));
+    const sentiment = searchParams.get("sentiment")?.toUpperCase();
+    const source = searchParams.get("source")?.toUpperCase();
+    const sort = searchParams.get("sort") || "createdAt_desc";
+    const search = searchParams.get("search") || "";
+
+    // Build where clause
+    const where: Record<string, unknown> = { restaurantId };
+    if (sentiment && ["POSITIVE", "NEUTRAL", "NEGATIVE"].includes(sentiment)) {
+      where.sentiment = sentiment;
+    }
+    if (source && ["GOOGLE", "TRIPADVISOR", "YELP", "OTHER"].includes(source)) {
+      where.source = source;
+    }
+    if (search) {
+      where.OR = [
+        { content: { contains: search, mode: "insensitive" } },
+        { author: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    // Build orderBy
+    const sortMap: Record<string, Record<string, string>> = {
+      createdAt_desc: { createdAt: "desc" },
+      createdAt_asc: { createdAt: "asc" },
+      rating_desc: { rating: "desc" },
+      rating_asc: { rating: "asc" },
+    };
+    const orderBy = sortMap[sort] || { createdAt: "desc" };
+
+    const [reviews, total] = await Promise.all([
+      prisma.review.findMany({
+        where,
+        include: { responses: { orderBy: { createdAt: "desc" }, take: 1 } },
+        orderBy,
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      prisma.review.count({ where }),
+    ]);
 
     // Map to frontend format
     const mapped = reviews.map((r: DbReview & { responses: DbResponse[] }) => ({
@@ -50,7 +88,13 @@ export async function GET(
         : undefined,
     }));
 
-    return NextResponse.json({ reviews: mapped, restaurantId });
+    return NextResponse.json({
+      reviews: mapped,
+      restaurantId,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     logger.error("Reviews fetch error", error, { path: "/api/restaurants/[id]/reviews" });
     return NextResponse.json(

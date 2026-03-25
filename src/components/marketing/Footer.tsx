@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -16,12 +17,12 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">{t("product")}</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                <a href="#features" className="text-white/60 hover:text-white transition-colors">
                   {t("links.features")}
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                <a href="#pricing" className="text-white/60 hover:text-white transition-colors">
                   {t("links.pricing")}
                 </a>
               </li>
@@ -32,14 +33,14 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">{t("legal")}</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                <Link href="/privacy" className="text-white/60 hover:text-white transition-colors">
                   {t("links.privacy")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                <Link href="/terms" className="text-white/60 hover:text-white transition-colors">
                   {t("links.terms")}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import {
   LineChart,
@@ -14,6 +14,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import Skeleton, { SkeletonStat, SkeletonChart } from "@/components/ui/Skeleton";
 
 interface WeeklyData {
   week: string;
@@ -32,11 +33,27 @@ interface AnalyticsData {
   totalReviews: number;
 }
 
+const PERIOD_OPTIONS = [
+  { value: 28, labelKey: "last4Weeks" },
+  { value: 84, labelKey: "last12Weeks" },
+  { value: 180, labelKey: "last6Months" },
+  { value: 365, labelKey: "last1Year" },
+] as const;
+
 export default function AnalyticsPage() {
   const t = useTranslations("analytics");
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [restaurantId, setRestaurantId] = useState<string | null>(null);
+  const [days, setDays] = useState(84);
+
+  const fetchAnalytics = useCallback(async (restId: string, d: number) => {
+    const res = await fetch(`/api/restaurants/${restId}/analytics?days=${d}`);
+    if (res.ok) {
+      const json = await res.json();
+      setData(json);
+    }
+  }, []);
 
   useEffect(() => {
     fetch("/api/me")
@@ -44,17 +61,38 @@ export default function AnalyticsPage() {
       .then((me) => {
         if (me.restaurantId) {
           setRestaurantId(me.restaurantId);
-          return fetch(`/api/restaurants/${me.restaurantId}/analytics`);
+          return fetchAnalytics(me.restaurantId, days);
         }
         throw new Error("No restaurant");
       })
-      .then((r) => r.json())
-      .then(setData)
       .catch(() => {})
       .finally(() => setLoaded(true));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!loaded) return null;
+  const handlePeriodChange = (newDays: number) => {
+    setDays(newDays);
+    if (restaurantId) {
+      fetchAnalytics(restaurantId, newDays);
+    }
+  };
+
+  if (!loaded) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <Skeleton className="h-7 w-32" />
+          <Skeleton className="h-4 w-64 mt-2" />
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <SkeletonStat />
+          <SkeletonStat />
+          <SkeletonStat />
+        </div>
+        <SkeletonChart />
+        <SkeletonChart />
+      </div>
+    );
+  }
 
   if (!data || data.totalReviews === 0) {
     return (
@@ -69,13 +107,32 @@ export default function AnalyticsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="text-muted text-sm mt-1">{t("subtitle")}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
+          <p className="text-muted text-sm mt-1">{t("subtitle")}</p>
+        </div>
+
+        {/* Period selector */}
+        <div className="flex gap-1 bg-background rounded-[var(--radius-button)] p-1">
+          {PERIOD_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => handlePeriodChange(opt.value)}
+              className={`px-3 py-1.5 text-sm rounded-[var(--radius-button)] transition-colors ${
+                days === opt.value
+                  ? "bg-card font-medium text-foreground shadow-sm"
+                  : "text-muted hover:text-foreground"
+              }`}
+            >
+              {t(opt.labelKey)}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <div className="bg-card border border-border rounded-[var(--radius-card)] p-4">
           <p className="text-xs text-muted uppercase">{t("totalReviews")}</p>
           <p className="text-2xl font-bold mt-1">{data.totalReviews}</p>
@@ -83,10 +140,6 @@ export default function AnalyticsPage() {
         <div className="bg-card border border-border rounded-[var(--radius-card)] p-4">
           <p className="text-xs text-muted uppercase">{t("responseRate")}</p>
           <p className="text-2xl font-bold mt-1">{data.responseRate}%</p>
-        </div>
-        <div className="bg-card border border-border rounded-[var(--radius-card)] p-4">
-          <p className="text-xs text-muted uppercase">{t("period")}</p>
-          <p className="text-2xl font-bold mt-1">{t("last12Weeks")}</p>
         </div>
       </div>
 

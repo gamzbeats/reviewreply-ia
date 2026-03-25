@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Inter } from "next/font/google";
 import ClerkProviderWrapper from "@/components/providers/ClerkProviderWrapper";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 import type { Metadata } from "next";
 import "../globals.css";
 
@@ -61,7 +62,9 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${inter.variable} font-sans`}>
         <NextIntlClientProvider>
-          <ClerkProviderWrapper>{children}</ClerkProviderWrapper>
+          <ClerkProviderWrapper>
+            <ToastProvider>{children}</ToastProvider>
+          </ClerkProviderWrapper>
         </NextIntlClientProvider>
       </body>
     </html>

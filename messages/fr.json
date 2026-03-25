@@ -72,6 +72,62 @@
       "cta": "Passer à Business"
     }
   },
+  "testimonials": {
+    "title": "Adopté par les restaurateurs",
+    "subtitle": "Découvrez comment ReviewReply aide les restaurants à gérer leur réputation en ligne.",
+    "items": [
+      {
+        "name": "Sophie M.",
+        "role": "Propriétaire, Le Petit Bistro",
+        "quote": "ReviewReply a complètement changé ma façon de gérer les avis. Je passais 30 minutes par réponse, maintenant c'est 30 secondes. Le ton est toujours parfait."
+      },
+      {
+        "name": "Marco T.",
+        "role": "Gérant, Trattoria Roma",
+        "quote": "L'analyse de sentiment est incroyablement précise. Nous répondons aux avis négatifs en quelques minutes, et notre note Google est passée de 3.8 à 4.3 en trois mois."
+      },
+      {
+        "name": "Claire D.",
+        "role": "Propriétaire, Café de la Place",
+        "quote": "La fonctionnalité d'analyse des tendances nous a ouvert les yeux. Nous avons découvert des plaintes récurrentes sur les temps d'attente dont nous n'avions aucune idée."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur ReviewReply.",
+    "items": [
+      {
+        "question": "Comment l'IA génère-t-elle les réponses ?",
+        "answer": "Notre IA analyse le sentiment, le contexte et les détails spécifiques de chaque avis, puis génère une réponse professionnelle et empathique adaptée à la situation. Vous pouvez personnaliser le ton (professionnel, chaleureux, décontracté, formel) et modifier avant de publier."
+      },
+      {
+        "question": "Quelles plateformes d'avis sont supportées ?",
+        "answer": "ReviewReply fonctionne avec Google, TripAdvisor, Yelp et toute autre plateforme. Collez simplement l'avis dans notre outil. Avec le plan Business, les avis Google sont synchronisés automatiquement."
+      },
+      {
+        "question": "Puis-je essayer gratuitement ?",
+        "answer": "Oui ! Le plan Gratuit vous donne 10 réponses IA par mois, la détection de sentiment et la copie en un clic. Aucune carte bancaire requise."
+      },
+      {
+        "question": "Mes données sont-elles sécurisées ?",
+        "answer": "Absolument. Nous utilisons un chiffrement standard de l'industrie et vos données sont stockées sur des serveurs sécurisés. Nous ne partageons jamais vos avis ou réponses avec des tiers."
+      },
+      {
+        "question": "Puis-je gérer plusieurs restaurants ?",
+        "answer": "Oui, avec le plan Business vous pouvez gérer jusqu'à 10 restaurants, inviter des membres d'équipe et avoir un tableau de bord centralisé pour tous vos établissements."
+      },
+      {
+        "question": "Comment fonctionne l'analyse concurrentielle ?",
+        "answer": "Notre IA récupère les avis publics des restaurants concurrents et analyse leurs forces et faiblesses, vous aidant à identifier les opportunités pour vous démarquer sur votre marché."
+      }
+    ]
+  },
+  "socialProof": {
+    "restaurants": "500+ restaurants",
+    "reviews": "50 000+ avis analysés",
+    "satisfaction": "Satisfait ou remboursé"
+  },
   "footer": {
     "description": "L'assistant IA pour restaurateurs. Répondez aux avis clients en quelques secondes.",
     "product": "Produit",
@@ -126,6 +182,20 @@
       "neutral": "Neutre",
       "negative": "Négatif"
     },
+    "filters": {
+      "all": "Tous",
+      "search": "Rechercher",
+      "searchPlaceholder": "Rechercher par auteur ou contenu...",
+      "sortNewest": "Plus récents",
+      "sortOldest": "Plus anciens",
+      "sortHighest": "Mieux notés",
+      "sortLowest": "Moins bien notés",
+      "source": "Source",
+      "allSources": "Toutes"
+    },
+    "pagination": {
+      "showing": "Avis {from}-{to} sur {total}"
+    },
     "sources": {
       "google": "Google",
       "tripadvisor": "TripAdvisor",
@@ -176,6 +246,20 @@
     "popular": "Populaire",
     "perMonth": "/mois",
     "error": "Une erreur est survenue",
+    "invoices": "Factures",
+    "noInvoices": "Aucune facture.",
+    "invoiceDate": "Date",
+    "invoiceAmount": "Montant",
+    "invoiceStatus": "Statut",
+    "invoicePdf": "PDF",
+    "download": "Télécharger",
+    "subscriptionStatus": "Statut",
+    "renewsOn": "Renouvellement le",
+    "cancelsOn": "Annulation le",
+    "active": "Actif",
+    "canceled": "Annulé",
+    "paid": "Payé",
+    "open": "En attente",
     "features": {
       "analyzes10": "10 analyses par mois",
       "oneRestaurant": "1 restaurant",
@@ -202,7 +286,10 @@
     "totalReviews": "Total avis",
     "responseRate": "Taux de réponse",
     "period": "Période",
+    "last4Weeks": "4 semaines",
     "last12Weeks": "12 semaines",
+    "last6Months": "6 mois",
+    "last1Year": "1 an",
     "sentimentOverTime": "Sentiment dans le temps",
     "ratingDistribution": "Distribution des notes",
     "volumeOverTime": "Volume d'avis par semaine",
@@ -210,6 +297,105 @@
     "neutral": "Neutre",
     "negative": "Négatif",
     "reviewVolume": "Avis"
+  },
+  "competitors": {
+    "nav": "Concurrents",
+    "title": "Analyse concurrentielle",
+    "subtitle": "Surveillez vos concurrents et identifiez les opportunités pour vous démarquer.",
+    "addNew": "Ajouter un concurrent",
+    "empty": "Aucun concurrent. Ajoutez un restaurant concurrent pour commencer l'analyse.",
+    "search": "Rechercher un restaurant",
+    "searchPlaceholder": "Nom du concurrent, adresse...",
+    "manualName": "Nom du restaurant",
+    "manualNamePlaceholder": "Ex: Bistro Rival",
+    "address": "Adresse",
+    "addButton": "Ajouter le concurrent",
+    "adding": "Ajout...",
+    "addError": "Erreur lors de l'ajout",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce concurrent ?",
+    "deleteError": "Erreur lors de la suppression",
+    "analyze": "Analyser les avis",
+    "analyzing": "Analyse en cours...",
+    "analyzeError": "Erreur lors de l'analyse",
+    "lastAnalysis": "Dernière analyse",
+    "never": "Jamais",
+    "strengths": "Points forts",
+    "weaknesses": "Points faibles",
+    "opportunity": "Opportunité",
+    "summary": "Résumé",
+    "requiresBusiness": "L'analyse concurrentielle nécessite un plan Business.",
+    "limitReached": "Limite de concurrents atteinte (max 5).",
+    "reviewsFetched": "{count} avis récupérés",
+    "delete": "Supprimer"
+  },
+  "templates": {
+    "nav": "Templates",
+    "title": "Templates de réponse",
+    "subtitle": "Créez des templates de réponse réutilisables pour chaque type de sentiment.",
+    "addNew": "Nouveau template",
+    "empty": "Aucun template. Créez votre premier template pour accélérer vos réponses.",
+    "form": {
+      "name": "Nom du template",
+      "namePlaceholder": "Ex: Réponse standard avis positif",
+      "content": "Contenu de la réponse",
+      "contentPlaceholder": "Écrivez votre template de réponse ici...",
+      "tone": "Ton",
+      "sentiment": "Sentiment",
+      "create": "Créer le template",
+      "update": "Mettre à jour",
+      "creating": "Création...",
+      "updating": "Mise à jour..."
+    },
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce template ?",
+    "deleteError": "Erreur lors de la suppression",
+    "createError": "Erreur lors de la création",
+    "updateError": "Erreur lors de la mise à jour",
+    "useTemplate": "Utiliser un template",
+    "requiresPro": "Les templates nécessitent un plan Pro ou Business."
+  },
+  "team": {
+    "title": "Équipe",
+    "subtitle": "Gérez les membres de votre équipe et leurs rôles.",
+    "nav": "Équipe",
+    "invite": "Inviter un membre",
+    "email": "Email",
+    "emailPlaceholder": "collegue@exemple.com",
+    "role": "Rôle",
+    "roles": {
+      "OWNER": "Propriétaire",
+      "ADMIN": "Admin",
+      "MEMBER": "Membre"
+    },
+    "inviteButton": "Envoyer l'invitation",
+    "inviting": "Envoi...",
+    "inviteError": "Erreur lors de l'invitation",
+    "updateError": "Erreur lors de la mise à jour",
+    "removeError": "Erreur lors de la suppression",
+    "removeConfirm": "Êtes-vous sûr de vouloir retirer ce membre de l'équipe ?",
+    "remove": "Retirer",
+    "empty": "Aucun membre d'équipe. Invitez votre premier coéquipier.",
+    "requiresBusiness": "La gestion d'équipe nécessite un plan Business.",
+    "limitReached": "Limite de membres atteinte (max 5).",
+    "memberSince": "Membre depuis",
+    "you": "(vous)"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Choisissez quelles notifications email vous souhaitez recevoir.",
+    "nav": "Notifications",
+    "emailNewReview": "Notification nouvel avis",
+    "emailNewReviewDesc": "Recevoir un email quand un nouvel avis est publié.",
+    "emailNegativeOnly": "Avis négatifs uniquement",
+    "emailNegativeOnlyDesc": "Être notifié uniquement pour les avis négatifs.",
+    "emailWeeklyDigest": "Résumé hebdomadaire",
+    "emailWeeklyDigestDesc": "Recevoir un résumé hebdomadaire de vos avis.",
+    "emailMonthlyReport": "Rapport mensuel",
+    "emailMonthlyReportDesc": "Recevoir un rapport PDF mensuel.",
+    "saved": "Préférences sauvegardées",
+    "error": "Erreur lors de la sauvegarde",
+    "upgradeBadge": "Upgrade"
   },
   "settings": {
     "nav": "Paramètres",
@@ -220,6 +406,11 @@
     "description": "L'assistant IA qui aide les restaurateurs à répondre aux avis clients de manière professionnelle et empathique.",
     "ogTitle": "ReviewReply — Transformez les avis en clients fidèles",
     "ogDescription": "Analysez le sentiment, générez des réponses professionnelles et gérez votre réputation en ligne avec l'IA."
+  },
+  "modal": {
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "delete": "Supprimer"
   },
   "errors": {
     "title": "Une erreur est survenue",

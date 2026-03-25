@@ -8,20 +8,53 @@ import StarRating from "@/components/ui/StarRating";
 import CopyButton from "@/components/ui/CopyButton";
 import Button from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { Review, AnalyzeResponse } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
+
+interface Template {
+  id: string;
+  name: string;
+  content: string;
+  sentiment: string;
+}
 
 interface ReviewCardProps {
   review: Review;
   onUpdate: (review: Review) => void;
   onDelete: (id: string) => void;
+  templates?: Template[];
 }
 
-export default function ReviewCard({ review, onUpdate, onDelete }: ReviewCardProps) {
+export default function ReviewCard({ review, onUpdate, onDelete, templates }: ReviewCardProps) {
   const t = useTranslations("dashboard.review");
   const tSources = useTranslations("dashboard.sources");
+  const tModal = useTranslations("modal");
+  const tTemplates = useTranslations("templates");
   const locale = useLocale();
   const [regenerating, setRegenerating] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [templateMenuOpen, setTemplateMenuOpen] = useState(false);
+
+  // Filter templates matching this review's sentiment
+  const matchingTemplates = templates?.filter(
+    (tpl) => tpl.sentiment === review.sentiment.toUpperCase()
+  ) || [];
+
+  const handleUseTemplate = (tpl: Template) => {
+    setTemplateMenuOpen(false);
+    const updatedReview: Review = {
+      ...review,
+      response: {
+        id: crypto.randomUUID(),
+        reviewId: review.id,
+        content: tpl.content,
+        generatedAt: new Date().toISOString(),
+        copied: false,
+      },
+    };
+    onUpdate(updatedReview);
+  };
 
   const sentimentLabel = t(review.sentiment);
 
@@ -60,10 +93,6 @@ export default function ReviewCard({ review, onUpdate, onDelete }: ReviewCardPro
     } finally {
       setRegenerating(false);
     }
-  };
-
-  const handleDelete = () => {
-    onDelete(review.id);
   };
 
   return (
@@ -119,10 +148,34 @@ export default function ReviewCard({ review, onUpdate, onDelete }: ReviewCardPro
                 t("regenerate")
               )}
             </Button>
+            {matchingTemplates.length > 0 && (
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setTemplateMenuOpen(!templateMenuOpen)}
+                >
+                  {tTemplates("useTemplate")}
+                </Button>
+                {templateMenuOpen && (
+                  <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-[var(--radius-card)] shadow-lg z-20 min-w-[200px] py-1">
+                    {matchingTemplates.map((tpl) => (
+                      <button
+                        key={tpl.id}
+                        onClick={() => handleUseTemplate(tpl)}
+                        className="w-full text-left px-3 py-2 text-sm hover:bg-background transition-colors"
+                      >
+                        {tpl.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
             <Button
               variant="ghost"
               size="sm"
-              onClick={handleDelete}
+              onClick={() => setConfirmDelete(true)}
               className="text-sentiment-negative hover:text-sentiment-negative ml-auto"
             >
               {t("delete")}
@@ -130,6 +183,17 @@ export default function ReviewCard({ review, onUpdate, onDelete }: ReviewCardPro
           </div>
         </div>
       )}
+
+      <ConfirmDialog
+        open={confirmDelete}
+        onConfirm={() => { setConfirmDelete(false); onDelete(review.id); }}
+        onCancel={() => setConfirmDelete(false)}
+        title={t("delete")}
+        message={t("delete") + " ?"}
+        confirmLabel={tModal("delete")}
+        cancelLabel={tModal("cancel")}
+        variant="danger"
+      />
     </Card>
   );
 }

@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { useToast } from "@/components/ui/ToastProvider";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import Skeleton, { SkeletonCard } from "@/components/ui/Skeleton";
 
 interface Restaurant {
   id: string;
@@ -18,9 +21,12 @@ interface Restaurant {
 
 export default function RestaurantsPage() {
   const t = useTranslations("restaurants");
+  const tModal = useTranslations("modal");
+  const toast = useToast();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [syncing, setSyncing] = useState<string | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/restaurants")
@@ -42,18 +48,16 @@ export default function RestaurantsPage() {
         const listRes = await fetch("/api/restaurants");
         const listData = await listRes.json();
         setRestaurants(listData.restaurants || []);
-        alert(t("syncSuccess", { inserted: data.inserted, skipped: data.skipped }));
+        toast.success(t("syncSuccess", { inserted: data.inserted, skipped: data.skipped }));
       }
     } catch {
-      alert(t("syncError"));
+      toast.error(t("syncError"));
     } finally {
       setSyncing(null);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm(t("deleteConfirm"))) return;
-
     try {
       const res = await fetch(`/api/restaurants/${id}`, {
         method: "DELETE",
@@ -62,14 +66,32 @@ export default function RestaurantsPage() {
         setRestaurants((prev) => prev.filter((r) => r.id !== id));
       } else {
         const data = await res.json();
-        alert(data.error || t("deleteError"));
+        toast.error(data.error || t("deleteError"));
       }
     } catch {
-      alert(t("deleteError"));
+      toast.error(t("deleteError"));
+    } finally {
+      setDeleteId(null);
     }
   };
 
-  if (!loaded) return null;
+  if (!loaded) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <Skeleton className="h-7 w-40" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+          <Skeleton className="h-10 w-36 rounded-[var(--radius-button)]" />
+        </div>
+        <div className="grid gap-4">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -126,7 +148,7 @@ export default function RestaurantsPage() {
                   </button>
                 )}
                 <button
-                  onClick={() => handleDelete(restaurant.id)}
+                  onClick={() => setDeleteId(restaurant.id)}
                   className="px-3 py-1.5 text-sm text-red-500 border border-red-200 rounded-[var(--radius-button)] hover:bg-red-50 transition-colors"
                 >
                   {t("delete")}
@@ -155,6 +177,17 @@ export default function RestaurantsPage() {
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={!!deleteId}
+        onConfirm={() => deleteId && handleDelete(deleteId)}
+        onCancel={() => setDeleteId(null)}
+        title={t("delete")}
+        message={t("deleteConfirm")}
+        confirmLabel={tModal("delete")}
+        cancelLabel={tModal("cancel")}
+        variant="danger"
+      />
     </div>
   );
 }

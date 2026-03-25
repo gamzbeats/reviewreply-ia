@@ -4,7 +4,7 @@ import { getOrCreateUser } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ restaurantId: string }> }
 ) {
   try {
@@ -19,12 +19,15 @@ export async function GET(
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
-    // Sentiment over time (last 12 weeks)
-    const twelveWeeksAgo = new Date();
-    twelveWeeksAgo.setDate(twelveWeeksAgo.getDate() - 84);
+    // Accept days param (default 84 = 12 weeks)
+    const daysParam = request.nextUrl.searchParams.get("days");
+    const days = daysParam ? Math.min(365, Math.max(7, parseInt(daysParam) || 84)) : 84;
+
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
 
     const reviews = await prisma.review.findMany({
-      where: { restaurantId, createdAt: { gte: twelveWeeksAgo } },
+      where: { restaurantId, createdAt: { gte: startDate } },
       select: {
         sentiment: true,
         sentimentScore: true,

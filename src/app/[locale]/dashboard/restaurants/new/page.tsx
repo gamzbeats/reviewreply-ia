@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import { useToast } from "@/components/ui/ToastProvider";
 
 interface Prediction {
   placeId: string;
@@ -13,6 +14,7 @@ interface Prediction {
 export default function NewRestaurantPage() {
   const t = useTranslations("restaurants");
   const router = useRouter();
+  const toast = useToast();
   const [query, setQuery] = useState("");
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [selected, setSelected] = useState<Prediction | null>(null);
@@ -74,14 +76,14 @@ export default function NewRestaurantPage() {
       if (res.ok) {
         router.push("/dashboard/restaurants");
       } else if (data.error === "ALREADY_LINKED") {
-        alert(t("alreadyLinked"));
+        toast.warning(t("alreadyLinked"));
       } else if (data.error === "PLAN_LIMIT") {
-        alert(data.message);
+        toast.error(data.message);
       } else {
-        alert(t("createError"));
+        toast.error(t("createError"));
       }
     } catch {
-      alert(t("createError"));
+      toast.error(t("createError"));
     } finally {
       setCreating(false);
     }

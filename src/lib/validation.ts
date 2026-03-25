@@ -50,6 +50,49 @@ export const trendsRequestSchema = z.object({
 
 export type TrendsRequestInput = z.infer<typeof trendsRequestSchema>;
 
+// === Response Template ===
+export const templateCreateSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100),
+  content: z.string().min(1, "Content is required").max(2000),
+  tone: z.enum(["professional", "warm", "casual", "formal"]),
+  sentiment: z.enum(["POSITIVE", "NEUTRAL", "NEGATIVE"]),
+  locale: z.enum(["fr", "en"]).optional().default("fr"),
+});
+
+export type TemplateCreateInput = z.infer<typeof templateCreateSchema>;
+
+export const templateUpdateSchema = z.object({
+  name: z.string().min(1).max(100).optional(),
+  content: z.string().min(1).max(2000).optional(),
+  tone: z.enum(["professional", "warm", "casual", "formal"]).optional(),
+  sentiment: z.enum(["POSITIVE", "NEUTRAL", "NEGATIVE"]).optional(),
+  locale: z.enum(["fr", "en"]).optional(),
+});
+
+export type TemplateUpdateInput = z.infer<typeof templateUpdateSchema>;
+
+// === Competitor ===
+export const competitorCreateSchema = z.object({
+  name: z.string().min(1, "Name is required").max(200),
+  googlePlaceId: z.string().optional(),
+});
+
+export type CompetitorCreateInput = z.infer<typeof competitorCreateSchema>;
+
+// === Team Member ===
+export const teamMemberInviteSchema = z.object({
+  email: z.string().email("Invalid email"),
+  role: z.enum(["ADMIN", "MEMBER"]).default("MEMBER"),
+});
+
+export type TeamMemberInviteInput = z.infer<typeof teamMemberInviteSchema>;
+
+export const teamMemberUpdateSchema = z.object({
+  role: z.enum(["ADMIN", "MEMBER"]),
+});
+
+export type TeamMemberUpdateInput = z.infer<typeof teamMemberUpdateSchema>;
+
 // === Billing Checkout ===
 export const checkoutRequestSchema = z.object({
   priceId: z.string().min(1, "Price ID is required").startsWith("price_", "Invalid price ID"),

@@ -35,7 +35,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-[var(--spacing-section)] px-6">
+    <section id="features" className="py-[var(--spacing-section)] px-6">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-[var(--text-display-sm)] font-semibold tracking-[-0.06em]">

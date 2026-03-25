@@ -1,11 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useToast } from "@/components/ui/ToastProvider";
+import Skeleton from "@/components/ui/Skeleton";
+import { formatDate } from "@/lib/utils";
 
 interface UserInfo {
   plan: string;
   email: string;
+}
+
+interface Subscription {
+  id: string;
+  status: string;
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+}
+
+interface Invoice {
+  id: string;
+  number: string | null;
+  date: string | null;
+  amount: number;
+  currency: string;
+  status: string | null;
+  pdfUrl: string | null;
 }
 
 const PRICE_IDS = {
@@ -15,11 +35,15 @@ const PRICE_IDS = {
 
 export default function BillingPage() {
   const t = useTranslations("billing");
+  const locale = useLocale();
+  const toast = useToast();
   const [user, setUser] = useState<UserInfo | null>(null);
   const [usage, setUsage] = useState<{
     analyzes: number;
     trends: number;
   } | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState<string | null>(null);
 
   useEffect(() => {
@@ -31,6 +55,16 @@ export default function BillingPage() {
     fetch("/api/billing/usage")
       .then((r) => r.json())
       .then(setUsage)
+      .catch(() => {});
+
+    fetch("/api/billing/subscription")
+      .then((r) => r.json())
+      .then((data) => setSubscription(data.subscription))
+      .catch(() => {});
+
+    fetch("/api/billing/invoices")
+      .then((r) => r.json())
+      .then((data) => setInvoices(data.invoices || []))
       .catch(() => {});
   }, []);
 
@@ -47,7 +81,7 @@ export default function BillingPage() {
         window.location.href = data.url;
       }
     } catch {
-      alert(t("error"));
+      toast.error(t("error"));
     } finally {
       setLoading(null);
     }
@@ -62,13 +96,41 @@ export default function BillingPage() {
         window.location.href = data.url;
       }
     } catch {
-      alert(t("error"));
+      toast.error(t("error"));
     } finally {
       setLoading(null);
     }
   };
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <Skeleton className="h-7 w-32" />
+          <Skeleton className="h-4 w-56 mt-2" />
+        </div>
+        <div className="bg-card border border-border rounded-[var(--radius-card)] p-5 space-y-3">
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-6 w-16" />
+          <Skeleton className="h-2 w-full rounded-full" />
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-card border border-border rounded-[var(--radius-card)] p-5 space-y-3">
+              <Skeleton className="h-5 w-16" />
+              <Skeleton className="h-8 w-12" />
+              <div className="space-y-2">
+                <Skeleton className="h-3 w-full" />
+                <Skeleton className="h-3 w-4/5" />
+                <Skeleton className="h-3 w-3/5" />
+              </div>
+              <Skeleton className="h-9 w-full rounded-[var(--radius-button)]" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const plans = [
     {
@@ -202,6 +264,85 @@ export default function BillingPage() {
           </div>
         ))}
       </div>
+
+      {/* Subscription details */}
+      {subscription && (
+        <div className="bg-card border border-border rounded-[var(--radius-card)] p-5 space-y-2">
+          <h2 className="font-semibold">{t("subscriptionStatus")}</h2>
+          <div className="flex items-center gap-3">
+            <span className={`inline-flex items-center text-xs px-2 py-0.5 rounded-full font-medium ${
+              subscription.status === "active"
+                ? "bg-sentiment-positive/10 text-sentiment-positive"
+                : "bg-sentiment-negative/10 text-sentiment-negative"
+            }`}>
+              {subscription.status === "active" ? t("active") : t("canceled")}
+            </span>
+            {subscription.cancelAtPeriodEnd ? (
+              <span className="text-sm text-muted">
+                {t("cancelsOn")} {formatDate(subscription.currentPeriodEnd, locale)}
+              </span>
+            ) : (
+              <span className="text-sm text-muted">
+                {t("renewsOn")} {formatDate(subscription.currentPeriodEnd, locale)}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Invoices table */}
+      {invoices.length > 0 && (
+        <div className="bg-card border border-border rounded-[var(--radius-card)] overflow-hidden">
+          <div className="p-5 border-b border-border">
+            <h2 className="font-semibold">{t("invoices")}</h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-muted">
+                  <th className="px-5 py-3 font-medium">{t("invoiceDate")}</th>
+                  <th className="px-5 py-3 font-medium">{t("invoiceAmount")}</th>
+                  <th className="px-5 py-3 font-medium">{t("invoiceStatus")}</th>
+                  <th className="px-5 py-3 font-medium">{t("invoicePdf")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoices.map((inv) => (
+                  <tr key={inv.id} className="border-b border-border last:border-0">
+                    <td className="px-5 py-3">
+                      {inv.date ? formatDate(inv.date, locale) : "—"}
+                    </td>
+                    <td className="px-5 py-3 font-medium">
+                      {(inv.amount / 100).toFixed(2)} {inv.currency.toUpperCase()}
+                    </td>
+                    <td className="px-5 py-3">
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${
+                        inv.status === "paid"
+                          ? "bg-sentiment-positive/10 text-sentiment-positive"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}>
+                        {inv.status === "paid" ? t("paid") : t("open")}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3">
+                      {inv.pdfUrl && (
+                        <a
+                          href={inv.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          {t("download")}
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
