@@ -1,6 +1,7 @@
 import Header from "@/components/marketing/Header";
 import HeroSection from "@/components/marketing/HeroSection";
 import FeaturesSection from "@/components/marketing/FeaturesSection";
+import ComparisonSection from "@/components/marketing/ComparisonSection";
 import HowItWorksSection from "@/components/marketing/HowItWorksSection";
 import PricingSection from "@/components/marketing/PricingSection";
 import TestimonialsSection from "@/components/marketing/TestimonialsSection";
@@ -13,6 +14,7 @@ export default function HomePage() {
       <Header />
       <HeroSection />
       <FeaturesSection />
+      <ComparisonSection />
       <HowItWorksSection />
       <PricingSection />
       <TestimonialsSection />

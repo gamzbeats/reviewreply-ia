@@ -8,6 +8,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 export default function Header() {
   const t = useTranslations("header");
@@ -31,8 +32,8 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="text-xl font-semibold tracking-tight">
-          {t("title")}
+        <Link href="/" className="flex items-center">
+          <Image src="/logo.png" alt="ReviewReply" width={44} height={44} className="rounded-sm" />
         </Link>
 
         {/* Desktop actions */}

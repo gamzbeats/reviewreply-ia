@@ -15,6 +15,7 @@ import {
   Legend,
 } from "recharts";
 import Skeleton, { SkeletonStat, SkeletonChart } from "@/components/ui/Skeleton";
+import { Link } from "@/i18n/navigation";
 
 interface WeeklyData {
   week: string;
@@ -96,11 +97,17 @@ export default function AnalyticsPage() {
 
   if (!data || data.totalReviews === 0) {
     return (
-      <div className="text-center py-16 text-muted">
-        <h1 className="text-2xl font-bold text-foreground mb-2">
-          {t("title")}
-        </h1>
-        <p>{t("noData")}</p>
+      <div className="text-center py-16">
+        <div className="w-14 h-14 rounded-full bg-sentiment-neutral-bg flex items-center justify-center mx-auto mb-6">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-sentiment-neutral">
+            <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+        </div>
+        <h1 className="text-2xl font-bold text-foreground mb-3">{t("title")}</h1>
+        <p className="text-muted max-w-sm mx-auto leading-relaxed mb-8">{t("noData")}</p>
+        <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 bg-brand text-[#111111] px-6 py-3 rounded-[var(--radius-button)] font-medium hover:bg-brand-hover transition-colors text-sm">
+          {t("noDataCta")}
+        </Link>
       </div>
     );
   }

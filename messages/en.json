@@ -27,6 +27,19 @@
       "description": "Copy the generated response and paste it directly on Google, TripAdvisor, or any other review platform."
     }
   },
+  "comparison": {
+    "title": "What ChatGPT Can't Do",
+    "subtitle": "ChatGPT writes a reply. ReviewReply manages your reputation over time.",
+    "chatgptCol": "ChatGPT alone",
+    "reviewreplyCol": "ReviewReply AI",
+    "row0": "Reply to a customer review",
+    "row1": "Auto-import reviews from Google",
+    "row2": "Full history of all your responses",
+    "row3": "Analytics & sentiment trends over time",
+    "row4": "Detect recurring problems across reviews",
+    "row5": "Competitor review analysis",
+    "cta": "Get Started Free"
+  },
   "howItWorks": {
     "title": "How It Works",
     "subtitle": "Three simple steps to respond like a pro.",
@@ -143,8 +156,11 @@
   "dashboard": {
     "title": "Dashboard",
     "addReview": "Add a Review",
-    "emptyTitle": "No reviews yet",
-    "emptyDescription": "Paste your first customer review to generate a professional response.",
+    "emptyTitle": "Analyze your first review",
+    "emptyDescription": "Unlike ChatGPT, every review analyzed here feeds your analytics, detects trends, and tracks your response rate over time.",
+    "emptyBadge1": "Automatic analytics",
+    "emptyBadge2": "Trend detection",
+    "emptyBadge3": "Full history",
     "stats": {
       "totalReviews": "Total Reviews",
       "avgRating": "Avg Rating",
@@ -286,7 +302,8 @@
     "nav": "Analytics",
     "title": "Analytics",
     "subtitle": "Visualize your review trends over the last 12 weeks.",
-    "noData": "Not enough data yet. Add reviews to see your analytics.",
+    "noData": "Analyze your first reviews from the dashboard to see your sentiment trends, response rate, and rating distribution appear here.",
+    "noDataCta": "Analyze my first reviews",
     "totalReviews": "Total Reviews",
     "responseRate": "Response Rate",
     "period": "Period",

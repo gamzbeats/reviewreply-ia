@@ -27,6 +27,19 @@
       "description": "Copiez la réponse générée et collez-la directement sur Google, TripAdvisor ou toute autre plateforme d'avis."
     }
   },
+  "comparison": {
+    "title": "Ce que ChatGPT ne fait pas",
+    "subtitle": "ChatGPT génère une réponse. ReviewReply gère votre réputation dans le temps.",
+    "chatgptCol": "ChatGPT seul",
+    "reviewreplyCol": "ReviewReply AI",
+    "row0": "Répondre à un avis client",
+    "row1": "Import automatique depuis Google",
+    "row2": "Historique de toutes vos réponses",
+    "row3": "Analytics et tendances sur la durée",
+    "row4": "Détection des problèmes récurrents",
+    "row5": "Analyse des avis concurrents",
+    "cta": "Commencer gratuitement"
+  },
   "howItWorks": {
     "title": "Comment ça marche",
     "subtitle": "Trois étapes simples pour répondre comme un pro.",
@@ -143,8 +156,11 @@
   "dashboard": {
     "title": "Tableau de bord",
     "addReview": "Ajouter un avis",
-    "emptyTitle": "Aucun avis pour le moment",
-    "emptyDescription": "Collez votre premier avis client pour générer une réponse professionnelle.",
+    "emptyTitle": "Analysez votre premier avis",
+    "emptyDescription": "Contrairement à ChatGPT, chaque avis analysé ici alimente vos analytics, détecte des tendances et mesure votre taux de réponse dans le temps.",
+    "emptyBadge1": "Analytics automatiques",
+    "emptyBadge2": "Détection de tendances",
+    "emptyBadge3": "Historique complet",
     "stats": {
       "totalReviews": "Total avis",
       "avgRating": "Note moyenne",
@@ -286,7 +302,8 @@
     "nav": "Analytics",
     "title": "Analytics",
     "subtitle": "Visualisez les tendances de vos avis sur les 12 dernières semaines.",
-    "noData": "Pas encore assez de données. Ajoutez des avis pour voir vos analytics.",
+    "noData": "Analysez vos premiers avis depuis le tableau de bord pour voir apparaître vos courbes de sentiment, votre taux de réponse et la distribution des notes.",
+    "noDataCta": "Analyser mes premiers avis",
     "totalReviews": "Total avis",
     "responseRate": "Taux de réponse",
     "period": "Période",

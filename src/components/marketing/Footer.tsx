@@ -1,15 +1,16 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="bg-dark text-white py-16 px-6 mt-[var(--spacing-section)]">
+    <footer className="bg-[#111111] text-white py-16 px-6 mt-[var(--spacing-section)]">
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
-            <h3 className="text-xl font-semibold mb-4">ReviewReply</h3>
+            <Image src="/logo.png" alt="ReviewReply" width={52} height={52} className="rounded-sm mb-4" />
             <p className="text-white/60 leading-relaxed">{t("description")}</p>
           </div>
 
