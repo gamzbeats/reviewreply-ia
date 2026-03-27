@@ -35,6 +35,12 @@ interface AnalyticsData {
   totalReviews: number;
 }
 
+interface Restaurant {
+  id: string;
+  name: string;
+  googlePlaceId: string | null;
+}
+
 const PERIOD_OPTIONS = [
   { value: 28, labelKey: "last4Weeks" },
   { value: 84, labelKey: "last12Weeks" },
@@ -47,7 +53,10 @@ export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [restaurantId, setRestaurantId] = useState<string | null>(null);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [days, setDays] = useState(84);
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<{ imported: number; total: number } | null>(null);
 
   const fetchAnalytics = useCallback(async (restId: string, d: number) => {
     const res = await fetch(`/api/restaurants/${restId}/analytics?days=${d}`);
@@ -58,14 +67,16 @@ export default function AnalyticsPage() {
   }, []);
 
   useEffect(() => {
-    fetch("/api/me")
-      .then((r) => r.json())
-      .then((me) => {
+    Promise.all([
+      fetch("/api/me").then((r) => r.json()),
+      fetch("/api/restaurants").then((r) => r.json()),
+    ])
+      .then(([me, restData]) => {
+        setRestaurants(restData.restaurants || []);
         if (me.restaurantId) {
           setRestaurantId(me.restaurantId);
           return fetchAnalytics(me.restaurantId, days);
         }
-        throw new Error("No restaurant");
       })
       .catch(() => {})
       .finally(() => setLoaded(true));
@@ -73,15 +84,35 @@ export default function AnalyticsPage() {
 
   const handlePeriodChange = (newDays: number) => {
     setDays(newDays);
-    if (restaurantId) {
-      fetchAnalytics(restaurantId, newDays);
-    }
+    if (restaurantId) fetchAnalytics(restaurantId, newDays);
   };
 
   const handleSwitch = (id: string) => {
     setRestaurantId(id);
+    setSyncResult(null);
     fetchAnalytics(id, days);
   };
+
+  const handleSync = async () => {
+    if (!restaurantId) return;
+    setSyncing(true);
+    setSyncResult(null);
+    try {
+      const res = await fetch(`/api/restaurants/${restaurantId}/sync-reviews`, {
+        method: "POST",
+      });
+      if (res.ok) {
+        const result = await res.json();
+        setSyncResult({ imported: result.imported, total: result.total });
+        await fetchAnalytics(restaurantId, days);
+      }
+    } finally {
+      setSyncing(false);
+    }
+  };
+
+  const activeRestaurant = restaurants.find((r) => r.id === restaurantId);
+  const hasGooglePlaceId = !!activeRestaurant?.googlePlaceId;
 
   if (!loaded) {
     return (
@@ -103,17 +134,41 @@ export default function AnalyticsPage() {
 
   if (!data || data.totalReviews === 0) {
     return (
-      <div className="text-center py-16">
-        <div className="w-14 h-14 rounded-full bg-sentiment-neutral-bg flex items-center justify-center mx-auto mb-6">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-sentiment-neutral">
-            <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
-          </svg>
+      <div className="space-y-6">
+        <RestaurantSwitcher activeId={restaurantId} onSwitch={handleSwitch} />
+        <div className="text-center py-16">
+          <div className="w-14 h-14 rounded-full bg-sentiment-neutral-bg flex items-center justify-center mx-auto mb-6">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-sentiment-neutral">
+              <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-foreground mb-3">{t("title")}</h1>
+          <p className="text-muted max-w-sm mx-auto leading-relaxed mb-8">{t("noData")}</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            {hasGooglePlaceId && (
+              <button
+                onClick={handleSync}
+                disabled={syncing}
+                className="inline-flex items-center gap-2 bg-brand text-[#111111] px-6 py-3 rounded-[var(--radius-button)] font-medium hover:bg-brand-hover transition-colors text-sm disabled:opacity-60"
+              >
+                {syncing ? (
+                  <>
+                    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+                    {t("syncing")}
+                  </>
+                ) : (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 .49-4.5" /></svg>
+                    {t("syncGoogle")}
+                  </>
+                )}
+              </button>
+            )}
+            <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 rounded-[var(--radius-button)] font-medium hover:bg-card transition-colors text-sm">
+              {t("noDataCta")}
+            </Link>
+          </div>
         </div>
-        <h1 className="text-2xl font-bold text-foreground mb-3">{t("title")}</h1>
-        <p className="text-muted max-w-sm mx-auto leading-relaxed mb-8">{t("noData")}</p>
-        <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 bg-brand text-[#111111] px-6 py-3 rounded-[var(--radius-button)] font-medium hover:bg-brand-hover transition-colors text-sm">
-          {t("noDataCta")}
-        </Link>
       </div>
     );
   }
@@ -134,23 +189,52 @@ export default function AnalyticsPage() {
           <p className="text-muted text-sm mt-1">{t("subtitle")}</p>
         </div>
 
-        {/* Period selector */}
-        <div className="flex gap-1 bg-background rounded-[var(--radius-button)] p-1">
-          {PERIOD_OPTIONS.map((opt) => (
+        <div className="flex items-center gap-3 flex-wrap">
+          {hasGooglePlaceId && (
             <button
-              key={opt.value}
-              onClick={() => handlePeriodChange(opt.value)}
-              className={`px-3 py-1.5 text-sm rounded-[var(--radius-button)] transition-colors ${
-                days === opt.value
-                  ? "bg-card font-medium text-foreground shadow-sm"
-                  : "text-muted hover:text-foreground"
-              }`}
+              onClick={handleSync}
+              disabled={syncing}
+              className="inline-flex items-center gap-2 border border-border px-3 py-1.5 rounded-[var(--radius-button)] text-sm text-muted hover:text-foreground hover:bg-card transition-colors disabled:opacity-60"
             >
-              {t(opt.labelKey)}
+              {syncing ? (
+                <>
+                  <svg className="animate-spin w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+                  {t("syncing")}
+                </>
+              ) : (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 .49-4.5" /></svg>
+                  {t("syncGoogle")}
+                </>
+              )}
             </button>
-          ))}
+          )}
+
+          {/* Period selector */}
+          <div className="flex gap-1 bg-background rounded-[var(--radius-button)] p-1">
+            {PERIOD_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => handlePeriodChange(opt.value)}
+                className={`px-3 py-1.5 text-sm rounded-[var(--radius-button)] transition-colors ${
+                  days === opt.value
+                    ? "bg-card font-medium text-foreground shadow-sm"
+                    : "text-muted hover:text-foreground"
+                }`}
+              >
+                {t(opt.labelKey)}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Sync result banner */}
+      {syncResult && (
+        <div className="bg-sentiment-positive-bg border border-sentiment-positive/20 rounded-[var(--radius-card)] px-4 py-3 text-sm text-sentiment-positive">
+          {t("syncDone", { imported: syncResult.imported, total: syncResult.total })}
+        </div>
+      )}
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 gap-4">
@@ -217,7 +301,7 @@ export default function AnalyticsPage() {
         </ResponsiveContainer>
       </div>
 
-      {/* Volume + response rate over time */}
+      {/* Volume over time */}
       <div className="bg-card border border-border rounded-[var(--radius-card)] p-5">
         <h2 className="font-semibold mb-4">{t("volumeOverTime")}</h2>
         <ResponsiveContainer width="100%" height={250}>
