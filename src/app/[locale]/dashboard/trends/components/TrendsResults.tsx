@@ -100,108 +100,110 @@ export default function TrendsResults({ data }: TrendsResultsProps) {
         </div>
       </Card>
 
-      {/* Issues */}
-      {data.issues.length > 0 && (
-        <div>
-          <h2 className="text-lg font-semibold mb-4">
-            {t("results.issuesTitle")}
-          </h2>
-          <div className="space-y-3">
-            {data.issues
-              .sort((a, b) => b.count - a.count)
-              .map((issue, index) => (
-                <Card key={index} padding="sm" className="border border-border">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <h3 className="font-medium text-sm truncate">
-                          {issue.theme}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Issues */}
+        {data.issues.length > 0 && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">
+              {t("results.issuesTitle")}
+            </h2>
+            <div className="space-y-3">
+              {data.issues
+                .sort((a, b) => b.count - a.count)
+                .map((issue, index) => (
+                  <Card key={index} padding="sm" className="border border-border">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <h3 className="font-medium text-sm truncate">
+                            {issue.theme}
+                          </h3>
+                          <SeverityBadge level={issue.severity} />
+                        </div>
+                        <span className="text-sm text-muted flex-shrink-0">
+                          {t("results.mentions", { count: issue.count })}
+                        </span>
+                      </div>
+
+                      <BarChart count={issue.count} max={maxCount} />
+
+                      {issue.examples.length > 0 && (
+                        <div className="space-y-1.5 pt-1">
+                          {issue.examples.map((example, i) => (
+                            <p
+                              key={i}
+                              className="text-xs text-muted italic pl-3 border-l-2 border-border"
+                            >
+                              &ldquo;{example}&rdquo;
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Suggestions */}
+        {data.suggestions.length > 0 && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">
+              {t("results.suggestionsTitle")}
+            </h2>
+            <div className="space-y-3">
+              {data.suggestions
+                .sort((a, b) => {
+                  const order = { high: 0, medium: 1, low: 2 };
+                  return order[a.priority] - order[b.priority];
+                })
+                .map((suggestion, index) => (
+                  <Card key={index} padding="sm" className="border border-border">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-full bg-sentiment-positive-bg flex items-center justify-center flex-shrink-0">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="text-sentiment-positive"
+                          >
+                            <path d="M12 2v20M2 12h20" />
+                          </svg>
+                        </div>
+                        <h3 className="font-medium text-sm flex-1">
+                          {suggestion.title}
                         </h3>
-                        <SeverityBadge level={issue.severity} />
+                        <PriorityBadge level={suggestion.priority} />
                       </div>
-                      <span className="text-sm text-muted flex-shrink-0">
-                        {t("results.mentions", { count: issue.count })}
-                      </span>
+                      <p className="text-sm text-muted leading-relaxed pl-10">
+                        {suggestion.description}
+                      </p>
+                      {suggestion.relatedThemes.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pl-10 pt-1">
+                          {suggestion.relatedThemes.map((theme, i) => (
+                            <span
+                              key={i}
+                              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-background text-muted"
+                            >
+                              {theme}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
-
-                    <BarChart count={issue.count} max={maxCount} />
-
-                    {issue.examples.length > 0 && (
-                      <div className="space-y-1.5 pt-1">
-                        {issue.examples.map((example, i) => (
-                          <p
-                            key={i}
-                            className="text-xs text-muted italic pl-3 border-l-2 border-border"
-                          >
-                            &ldquo;{example}&rdquo;
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </Card>
-              ))}
+                  </Card>
+                ))}
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* Suggestions */}
-      {data.suggestions.length > 0 && (
-        <div>
-          <h2 className="text-lg font-semibold mb-4">
-            {t("results.suggestionsTitle")}
-          </h2>
-          <div className="space-y-3">
-            {data.suggestions
-              .sort((a, b) => {
-                const order = { high: 0, medium: 1, low: 2 };
-                return order[a.priority] - order[b.priority];
-              })
-              .map((suggestion, index) => (
-                <Card key={index} padding="sm" className="border border-border">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-sentiment-positive-bg flex items-center justify-center flex-shrink-0">
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-sentiment-positive"
-                        >
-                          <path d="M12 2v20M2 12h20" />
-                        </svg>
-                      </div>
-                      <h3 className="font-medium text-sm flex-1">
-                        {suggestion.title}
-                      </h3>
-                      <PriorityBadge level={suggestion.priority} />
-                    </div>
-                    <p className="text-sm text-muted leading-relaxed pl-10">
-                      {suggestion.description}
-                    </p>
-                    {suggestion.relatedThemes.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 pl-10 pt-1">
-                        {suggestion.relatedThemes.map((theme, i) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-background text-muted"
-                          >
-                            {theme}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </Card>
-              ))}
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

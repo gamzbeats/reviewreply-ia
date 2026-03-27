@@ -286,45 +286,47 @@ export default function CompetitorsPage() {
                     </div>
                   )}
 
-                  {comp.analysisData.strengths && comp.analysisData.strengths.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-semibold mb-2 text-sentiment-positive">{t("strengths")}</h4>
-                      <div className="space-y-3">
-                        {comp.analysisData.strengths.map((s, i) => (
-                          <div key={i} className="bg-background rounded-[var(--radius-card)] p-3">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-medium text-sm">{s.theme}</span>
-                              <span className="text-xs text-muted">({s.count} mentions)</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {comp.analysisData.strengths && comp.analysisData.strengths.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-semibold mb-2 text-sentiment-positive">{t("strengths")}</h4>
+                        <div className="space-y-3">
+                          {comp.analysisData.strengths.map((s, i) => (
+                            <div key={i} className="bg-background rounded-[var(--radius-card)] p-3">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-medium text-sm">{s.theme}</span>
+                                <span className="text-xs text-muted">({s.count} mentions)</span>
+                              </div>
+                              <p className="text-sm text-foreground/80">{s.description}</p>
+                              <p className="text-xs text-primary mt-1">
+                                <span className="font-medium">{t("opportunity")}:</span> {s.opportunity}
+                              </p>
                             </div>
-                            <p className="text-sm text-foreground/80">{s.description}</p>
-                            <p className="text-xs text-primary mt-1">
-                              <span className="font-medium">{t("opportunity")}:</span> {s.opportunity}
-                            </p>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {comp.analysisData.weaknesses && comp.analysisData.weaknesses.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-semibold mb-2 text-sentiment-negative">{t("weaknesses")}</h4>
-                      <div className="space-y-3">
-                        {comp.analysisData.weaknesses.map((w, i) => (
-                          <div key={i} className="bg-background rounded-[var(--radius-card)] p-3">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-medium text-sm">{w.theme}</span>
-                              <span className="text-xs text-muted">({w.count} mentions)</span>
+                    {comp.analysisData.weaknesses && comp.analysisData.weaknesses.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-semibold mb-2 text-sentiment-negative">{t("weaknesses")}</h4>
+                        <div className="space-y-3">
+                          {comp.analysisData.weaknesses.map((w, i) => (
+                            <div key={i} className="bg-background rounded-[var(--radius-card)] p-3">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-medium text-sm">{w.theme}</span>
+                                <span className="text-xs text-muted">({w.count} mentions)</span>
+                              </div>
+                              <p className="text-sm text-foreground/80">{w.description}</p>
+                              <p className="text-xs text-primary mt-1">
+                                <span className="font-medium">{t("opportunity")}:</span> {w.opportunity}
+                              </p>
                             </div>
-                            <p className="text-sm text-foreground/80">{w.description}</p>
-                            <p className="text-xs text-primary mt-1">
-                              <span className="font-medium">{t("opportunity")}:</span> {w.opportunity}
-                            </p>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )}
             </div>
