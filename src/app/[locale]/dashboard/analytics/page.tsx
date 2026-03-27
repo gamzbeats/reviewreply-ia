@@ -16,6 +16,7 @@ import {
 } from "recharts";
 import Skeleton, { SkeletonStat, SkeletonChart } from "@/components/ui/Skeleton";
 import { Link } from "@/i18n/navigation";
+import RestaurantSwitcher from "@/app/[locale]/dashboard/components/RestaurantSwitcher";
 
 interface WeeklyData {
   week: string;
@@ -77,6 +78,11 @@ export default function AnalyticsPage() {
     }
   };
 
+  const handleSwitch = (id: string) => {
+    setRestaurantId(id);
+    fetchAnalytics(id, days);
+  };
+
   if (!loaded) {
     return (
       <div className="space-y-8">
@@ -112,8 +118,16 @@ export default function AnalyticsPage() {
     );
   }
 
+  // Merge neutral into positive for display
+  const chartData = data.sentimentOverTime.map((w) => ({
+    ...w,
+    positive: w.positive + w.neutral,
+  }));
+
   return (
     <div className="space-y-8">
+      <RestaurantSwitcher activeId={restaurantId} onSwitch={handleSwitch} />
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">{t("title")}</h1>
@@ -154,7 +168,7 @@ export default function AnalyticsPage() {
       <div className="bg-card border border-border rounded-[var(--radius-card)] p-5">
         <h2 className="font-semibold mb-4">{t("sentimentOverTime")}</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data.sentimentOverTime}>
+          <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis
               dataKey="week"
@@ -180,14 +194,6 @@ export default function AnalyticsPage() {
               stroke="var(--sentiment-negative)"
               name={t("negative")}
               strokeWidth={2}
-            />
-            <Line
-              type="monotone"
-              dataKey="neutral"
-              stroke="var(--sentiment-neutral)"
-              name={t("neutral")}
-              strokeWidth={2}
-              strokeDasharray="5 5"
             />
           </LineChart>
         </ResponsiveContainer>

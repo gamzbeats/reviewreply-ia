@@ -69,7 +69,6 @@ export default function ReviewList({
   const sentimentTabs = [
     { value: "", label: t("filters.all") },
     { value: "positive", label: t("review.positive") },
-    { value: "neutral", label: t("review.neutral") },
     { value: "negative", label: t("review.negative") },
   ];
 

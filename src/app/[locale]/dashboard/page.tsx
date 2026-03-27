@@ -214,10 +214,10 @@ export default function DashboardPage() {
           />
           <StatCard
             label={t("stats.sentiment")}
-            value={`${stats.sentiment.positive}`}
+            value={`${stats.sentiment.positive + (stats.sentiment.neutral ?? 0)}`}
             sub={`${stats.sentiment.negative} ${t("stats.negative")}`}
             color={
-              stats.sentiment.negative > stats.sentiment.positive
+              stats.sentiment.negative > stats.sentiment.positive + (stats.sentiment.neutral ?? 0)
                 ? "negative"
                 : "positive"
             }

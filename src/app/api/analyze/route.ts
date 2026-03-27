@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     const aiResult = JSON.parse(raw);
 
     const result: AnalyzeResponse = {
-      sentiment: aiResult.sentiment || "neutral",
+      sentiment: aiResult.sentiment || "positive",
       sentimentScore: aiResult.sentimentScore || 0.5,
       response: aiResult.response || "",
     };
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
       if (targetRestaurantId) {
         const sentimentMap: Record<string, "POSITIVE" | "NEUTRAL" | "NEGATIVE"> = {
           positive: "POSITIVE",
-          neutral: "NEUTRAL",
+          neutral: "POSITIVE",
           negative: "NEGATIVE",
         };
 
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
             source: sourceMap[source || "google"] || "OTHER",
             rating,
             content,
-            sentiment: sentimentMap[result.sentiment] || "NEUTRAL",
+            sentiment: sentimentMap[result.sentiment] || "POSITIVE",
             sentimentScore: result.sentimentScore,
             restaurantId: targetRestaurantId,
             responses: {

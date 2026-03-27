@@ -18,14 +18,14 @@ export function getAnalyzePrompt(locale: string, tone?: string): string {
 
 Given the following customer review, perform two tasks:
 
-TASK 1 - SENTIMENT: Classify as "positive", "neutral", or "negative" with confidence 0.0–1.0.
+TASK 1 - SENTIMENT: Classify as ONLY "positive" or "negative" with confidence 0.0–1.0.
+Rules: classify as "positive" if the overall tone is satisfied, appreciative, or constructive even with minor criticism (rating 3+). Classify as "negative" only if the reviewer is genuinely disappointed, frustrated, or critical overall (rating 1-2, or strongly negative tone regardless of rating). When in doubt, lean "positive".
 
 TASK 2 - RESPONSE: Write a professional response in ${lang} (3-5 sentences, under 100 words) that:
 - Addresses the reviewer by first name if available (otherwise say "there" in English or use a polite form in French)
 - Thanks them regardless of sentiment
 - For negative reviews: acknowledges the specific issue, apologizes sincerely without being defensive, explains what concrete steps will be taken, invites them back
 - For positive reviews: expresses genuine gratitude, reinforces what they enjoyed, invites them to return
-- For neutral reviews: thanks them, addresses any concerns mentioned, highlights positives
 - Sounds human, not corporate. No generic phrases like "we value your feedback" or "your satisfaction is our priority"${toneGuide}
 
 Respond ONLY with valid JSON in this exact format:
