@@ -320,7 +320,21 @@
     "positive": "Positive",
     "neutral": "Neutral",
     "negative": "Negative",
-    "reviewVolume": "Reviews"
+    "reviewVolume": "Reviews",
+    "avgRating": "Avg Rating",
+    "positiveRate": "Positive Reviews",
+    "sourceTitle": "By Source",
+    "insightsTitle": "Insights",
+    "bestWeek": "Best week: {date} — {rating}★ avg.",
+    "responseRateTrendUp": "Response rate up {delta}% vs prev. period",
+    "responseRateTrendDown": "Response rate down {delta}% vs prev. period",
+    "responseRateTrendFlat": "Response rate stable vs prev. period",
+    "positiveRateInsight": "{rate}% positive reviews this period",
+    "aboveThreshold": "Above 70% threshold",
+    "belowThreshold": "Below 70% threshold",
+    "week": "Week of",
+    "sourceManual": "Manual",
+    "sourceOther": "Other"
   },
   "competitors": {
     "nav": "Competitors",

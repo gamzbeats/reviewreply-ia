@@ -32,6 +32,7 @@ export async function GET(
         sentiment: true,
         sentimentScore: true,
         rating: true,
+        source: true,
         createdAt: true,
         responses: { select: { id: true }, take: 1 },
       },
@@ -92,9 +93,7 @@ export async function GET(
       avgRating:
         w.ratings.length > 0
           ? Number(
-              (w.ratings.reduce((a, b) => a + b, 0) / w.ratings.length).toFixed(
-                1
-              )
+              (w.ratings.reduce((a, b) => a + b, 0) / w.ratings.length).toFixed(1)
             )
           : 0,
       responseRate:
@@ -108,19 +107,81 @@ export async function GET(
     }));
 
     // Overall response rate
-    const totalWithResponse = reviews.filter(
-      (r) => r.responses.length > 0
-    ).length;
+    const totalWithResponse = reviews.filter((r) => r.responses.length > 0).length;
     const responseRate =
       reviews.length > 0
         ? Number(((totalWithResponse / reviews.length) * 100).toFixed(0))
         : 0;
+
+    // Average rating
+    const avgRating =
+      reviews.length > 0
+        ? Number(
+            (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+          )
+        : 0;
+
+    // Positive rate
+    const positiveCount = reviews.filter((r) => r.sentiment === "POSITIVE").length;
+    const positiveRate =
+      reviews.length > 0 ? Math.round((positiveCount / reviews.length) * 100) : 0;
+
+    // Source breakdown
+    const sourceMap: Record<string, { count: number; ratings: number[] }> = {};
+    for (const r of reviews) {
+      const src = r.source;
+      if (!sourceMap[src]) sourceMap[src] = { count: 0, ratings: [] };
+      sourceMap[src].count++;
+      sourceMap[src].ratings.push(r.rating);
+    }
+    const sourceBreakdown = Object.entries(sourceMap)
+      .map(([source, data]) => ({
+        source,
+        count: data.count,
+        avgRating:
+          data.ratings.length > 0
+            ? Number(
+                (data.ratings.reduce((a, b) => a + b, 0) / data.ratings.length).toFixed(1)
+              )
+            : 0,
+      }))
+      .sort((a, b) => b.count - a.count);
+
+    // Trend — compare with previous identical period
+    const prevStart = new Date(startDate);
+    prevStart.setDate(prevStart.getDate() - days);
+
+    const prevReviews = await prisma.review.findMany({
+      where: { restaurantId, createdAt: { gte: prevStart, lt: startDate } },
+      select: { sentiment: true, rating: true, responses: { select: { id: true }, take: 1 } },
+    });
+
+    const prevPositiveCount = prevReviews.filter((r) => r.sentiment === "POSITIVE").length;
+    const prevPositiveRate =
+      prevReviews.length > 0
+        ? Math.round((prevPositiveCount / prevReviews.length) * 100)
+        : 0;
+    const prevResponseCount = prevReviews.filter((r) => r.responses.length > 0).length;
+    const prevResponseRate =
+      prevReviews.length > 0
+        ? Math.round((prevResponseCount / prevReviews.length) * 100)
+        : 0;
+
+    const trend = {
+      reviews: reviews.length - prevReviews.length,
+      positiveRate: positiveRate - prevPositiveRate,
+      responseRate: responseRate - prevResponseRate,
+    };
 
     return NextResponse.json({
       sentimentOverTime,
       ratingDistribution: ratingDist,
       responseRate,
       totalReviews: reviews.length,
+      avgRating,
+      positiveRate,
+      sourceBreakdown,
+      trend,
     });
   } catch (error) {
     logger.error("Analytics error", error, { path: "/api/restaurants/[id]/analytics" });
