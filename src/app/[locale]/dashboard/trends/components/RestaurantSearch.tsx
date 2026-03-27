@@ -201,7 +201,7 @@ export default function RestaurantSearch({
               type="button"
               onClick={handleAnalyze}
               disabled={loading}
-              className="inline-flex items-center gap-2 bg-foreground text-white px-5 py-2.5 text-sm font-medium rounded-[var(--radius-button)] hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="inline-flex items-center gap-2 bg-brand text-[#111111] px-5 py-2.5 text-sm font-medium rounded-[var(--radius-button)] hover:bg-brand-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {loading ? (
                 <>

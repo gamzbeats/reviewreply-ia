@@ -10,9 +10,12 @@
   --color-muted: #6b7280;
   --color-border: #e5e5e5;
 
+  --color-brand: #F5A623;
+  --color-brand-hover: #D4881E;
+
   --color-sentiment-negative: #ef4444;
   --color-sentiment-neutral: #f59e0b;
-  --color-sentiment-positive: #22c55e;
+  --color-sentiment-positive: #5CBF2A;
 
   --color-sentiment-negative-bg: #fef2f2;
   --color-sentiment-neutral-bg: #fffbeb;

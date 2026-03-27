@@ -86,7 +86,7 @@ export default function ReviewImportForm({
             onClick={() => setMode("bulk")}
             className={`px-4 py-2 text-sm rounded-[var(--radius-button)] transition-colors cursor-pointer ${
               mode === "bulk"
-                ? "bg-foreground text-white"
+                ? "bg-foreground text-background"
                 : "bg-background text-muted hover:text-foreground"
             }`}
           >
@@ -97,7 +97,7 @@ export default function ReviewImportForm({
             onClick={() => setMode("individual")}
             className={`px-4 py-2 text-sm rounded-[var(--radius-button)] transition-colors cursor-pointer ${
               mode === "individual"
-                ? "bg-foreground text-white"
+                ? "bg-foreground text-background"
                 : "bg-background text-muted hover:text-foreground"
             }`}
           >

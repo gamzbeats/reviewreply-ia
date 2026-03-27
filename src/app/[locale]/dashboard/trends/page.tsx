@@ -131,7 +131,7 @@ export default function TrendsPage() {
           }}
           className={`px-5 py-2.5 text-sm rounded-[var(--radius-button)] transition-colors cursor-pointer font-medium ${
             tab === "google"
-              ? "bg-foreground text-white"
+              ? "bg-foreground text-background"
               : "bg-card text-muted hover:text-foreground border border-border"
           }`}
         >
@@ -154,7 +154,7 @@ export default function TrendsPage() {
           }}
           className={`px-5 py-2.5 text-sm rounded-[var(--radius-button)] transition-colors cursor-pointer font-medium ${
             tab === "manual"
-              ? "bg-foreground text-white"
+              ? "bg-foreground text-background"
               : "bg-card text-muted hover:text-foreground border border-border"
           }`}
         >

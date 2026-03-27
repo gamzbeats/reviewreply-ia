@@ -30,7 +30,7 @@ export default function ThemeToggle() {
         className={cn(
           "p-1.5 rounded-full transition-all duration-200 cursor-pointer",
           theme === "light"
-            ? "bg-foreground text-white"
+            ? "bg-foreground text-background"
             : "text-muted hover:text-foreground"
         )}
       >
@@ -61,7 +61,7 @@ export default function ThemeToggle() {
         className={cn(
           "p-1.5 rounded-full transition-all duration-200 cursor-pointer",
           theme === "dark"
-            ? "bg-foreground text-white"
+            ? "bg-foreground text-background"
             : "text-muted hover:text-foreground"
         )}
       >

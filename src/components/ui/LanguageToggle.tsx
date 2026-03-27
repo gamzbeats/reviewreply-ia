@@ -20,7 +20,7 @@ export default function LanguageToggle() {
         className={cn(
           "px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer",
           locale === "fr"
-            ? "bg-foreground text-white"
+            ? "bg-foreground text-background"
             : "text-muted hover:text-foreground"
         )}
       >
@@ -31,7 +31,7 @@ export default function LanguageToggle() {
         className={cn(
           "px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer",
           locale === "en"
-            ? "bg-foreground text-white"
+            ? "bg-foreground text-background"
             : "text-muted hover:text-foreground"
         )}
       >

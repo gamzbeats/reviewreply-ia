@@ -73,7 +73,7 @@ export default function PricingSection() {
               }
             >
               {plan.popular && plan.badge && (
-                <span className="absolute -top-3 left-6 bg-foreground text-white text-xs font-medium px-3 py-1 rounded-full">
+                <span className="absolute -top-3 left-6 bg-brand text-[#111111] text-xs font-medium px-3 py-1 rounded-full">
                   {plan.badge}
                 </span>
               )}

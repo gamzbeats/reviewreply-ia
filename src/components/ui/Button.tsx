@@ -17,7 +17,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 cursor-pointer",
           "rounded-[var(--radius-button)]",
           {
-            "bg-foreground text-white hover:bg-accent": variant === "primary",
+            "bg-brand text-[#111111] hover:bg-brand-hover": variant === "primary",
             "bg-card text-foreground border border-border hover:bg-card-hover": variant === "secondary",
             "text-foreground hover:text-accent bg-transparent": variant === "ghost",
           },
